@@ -2,14 +2,145 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="Hyperglass is a fast and easy to use web proxy that will let you bypass most (if not all) restrictions">
+    <meta name="keywords" content="proxy, web proxy, ultraviolet, service workers, unblock websites, unblock chromebook, free web proxy, proxy list, proxy sites, un block chromebook, online proxy, proxy server, proxysite, proxy youtube, bypass securly, bypass iboss, bypass lightspeed filter, holy unblocker, chromebooks, titanium network, unblock youtube, youtube proxy, unblocked youtube, youtube unblocked, hyperglass, proxy">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <title>HyperGlass</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <div id="header">
-        <image src="/images/Hyperglass.svg" alt="HyperGlass"></image>
-    </div>
+    <!-- overlaying the sidebar over the regular navbar and website -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
+    <!-- sidebar code -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title bitcoin-font">Hyperglass</span>
+            <button class="close-btn" id="close-sidebar">
+                <img src="images/close.svg" alt="Close">
+            </button>
+        </div>
+        
+        <ul class="sidebar-nav">
+            <!-- Move this into seperate file so it can be used on every page-->
+            <!-- Maybe the icons on the sidebar don't need to be there since already on topnav
+            bc no mobile support needed-->
+            <li>
+                <a href="#" class="sidebar-link active bitcoin-font">
+                    <img src="images/home.svg" alt="Home" class="sidebar-icon">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="apps.html" class="sidebar-link bitcoin-font">
+                    <img src="images/apps.svg" alt="Apps" class="sidebar-icon">
+                    <span>Apps</span>
+                </a>
+            </li>
+            <li>
+                <a href="chat.html" class="sidebar-link bitcoin-font">
+                    <img src="images/chat.svg" alt="Chat" class="sidebar-icon">
+                    <span>Chat</span>
+                </a>
+            </li>
+            <li>
+                <a href="settings.html" class="sidebar-link bitcoin-font">
+                    <img src="images/settings.svg" alt="Settings" class="sidebar-icon">
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-section">
+            <h3 class="section-title">Quick Apps</h3>
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <img src="images/hive.svg" alt="Geforce Now" class="sidebar-icon">
+                        <span>Geforce Now</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <img src="images/hive.svg" alt="Github" class="sidebar-icon">
+                        <span>Github</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <img src="images/hive.svg" alt="Fortnite" class="sidebar-icon">
+                        <span>Fortnite</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <img src="images/hive.svg" alt="Discord" class="sidebar-icon">
+                        <span>Discord</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- top navbar -->
+    <nav id="navbar">
+        <div class="navbar-left">
+            <button class="menu-toggle" id="menu-toggle">
+                <img src="images/menu.svg" alt="Menu">
+            </button>
+            <img src="images/favicon.ico" alt="HyperGlass Logo" class="logoimg">
+            <!-- If I ever want to add the hyperglass text logo back-->
+            <!-- <span class="logo bitcoin-font">Hyperglass</span> -->
+        </div>
+        
+        <div class="navbar-right">
+            <ul class="nav-items">
+                <li class="nav-item dropdown" id="quick-apps-dropdown">
+                    <button class="dropdown-btn bitcoin-font">
+                        <img src="images/hive.svg" alt="Quick Apps" class="nav-icon">
+                        <span>Quick Apps</span>
+                        <img src="images/arrow_down.svg" alt="Dropdown" class="dropdown-arrow">
+                    </button>
+                    <div class="dropdown-menu" id="quick-apps-menu">
+                        <a href="#" class="dropdown-item">Geforce Now</a>
+                        <a href="#" class="dropdown-item">Github</a>
+                        <a href="#" class="dropdown-item">Fortnite</a>
+                        <a href="#" class="dropdown-item">Discord</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="apps.html" class="nav-link bitcoin-font">
+                        <img src="images/apps.svg" alt="Apps" class="nav-icon">
+                        <span>Apps</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="chat.html" class="nav-link bitcoin-font">
+                        <img src="images/chat.svg" alt="Chat" class="nav-icon">
+                        <span>Chat</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="settings.html" class="nav-link bitcoin-font">
+                        <img src="images/settings.svg" alt="Settings" class="nav-icon">
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <h2>Welcome to HyperGlass</h2>
+            <p>Your fast and easy web proxy solution</p>
+        </div>
+    </main>
+
+    <script src="js/navbars.js"></script>
 </body>
 </html>
