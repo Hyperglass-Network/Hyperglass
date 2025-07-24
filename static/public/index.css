@@ -318,6 +318,52 @@ main {
     z-index: 1;
 }
 
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+#uv-form {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#uv-address {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line-clr);
+    border-radius: 0.5rem;
+    background-color: var(--base-clr);
+    color: var(--text-clr);
+    font-size: 1rem;
+    transition: border-color 200ms ease;
+    text-align: center;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    min-height: 80vh;
+    justify-content: center;
+}
+
+.search-container h2 {
+    color: var(--text-clr);
+    font-size: 2.4rem;
+    margin: 0;
+}
+
+.search-container p {
+    color: var(--secondary-text-clr);
+    font-size: 1rem;
+    margin: 0;
+}
+
 .container {
     border: 1px solid var(--line-clr);
     border-radius: 1rem;
