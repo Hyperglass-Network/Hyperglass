@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/navbars.css">
+    <script src="navbars.js"></script>
+</head>
+<body>
+    <!-- overlaying the sidebar over the regular navbar and website -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- sidebar code -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title bitcoin-font">Hyperglass</span>
+            <button class="close-btn" id="close-sidebar">
+                <img src="images/close.svg" alt="Close">
+            </button>
+        </div>
+        
+        <ul class="sidebar-nav">
+            <!-- Move this into separate file so it can be used on every page-->
+            <!-- Maybe the icons on the sidebar don't need to be there since already on topnav
+            bc no mobile support needed-->
+            <li>
+                <a href="#" class="sidebar-link active bitcoin-font">
+                    <img src="images/home.svg" alt="Home" class="sidebar-icon">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="apps.html" class="sidebar-link bitcoin-font">
+                    <img src="images/apps.svg" alt="Apps" class="sidebar-icon">
+                    <span>Apps</span>
+                </a>
+            </li>
+            <li>
+                <a href="chat.html" class="sidebar-link bitcoin-font">
+                    <img src="images/chat.svg" alt="Chat" class="sidebar-icon">
+                    <span>Chat</span>
+                </a>
+            </li>
+            <li>
+                <a href="settings.html" class="sidebar-link bitcoin-font">
+                    <img src="images/settings.svg" alt="Settings" class="sidebar-icon">
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-section">
+            <h3 class="section-title">Quick Apps</h3>
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <img src="images/hive.svg" alt="Geforce Now" class="sidebar-icon">
+                        <span>Geforce Now</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <img src="images/hive.svg" alt="Github" class="sidebar-icon">
+                        <span>Github</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <img src="images/hive.svg" alt="Fortnite" class="sidebar-icon">
+                        <span>Fortnite</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <img src="images/hive.svg" alt="Discord" class="sidebar-icon">
+                        <span>Discord</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- top navbar -->
+    <nav id="navbar">
+        <div class="navbar-left">
+            <button class="menu-toggle" id="menu-toggle">
+                <img src="images/menu.svg" alt="Menu">
+            </button>
+            <img src="images/favicon.ico" alt="HyperGlass Logo" class="logoimg">
+            <!-- If I ever want to add the hyperglass text logo back-->
+            <!-- <span class="logo bitcoin-font">Hyperglass</span> -->
+        </div>
+        
+        <div class="navbar-right">
+            <div class="special-icons">
+                <img class="icons" 
+                    src="images/geforcenow.png" 
+                    alt="Geforce Now Icon"
+                    data-url="https://play.geforcenow.com"
+                    data-query="GeForce Now">
+                <img class="icons" 
+                    src="images/github.png" 
+                    alt="Github Icon"
+                    data-url="https://github.com"
+                    data-query="GitHub">
+            </div>
+            <ul class="nav-items">
+                <li class="nav-item dropdown" id="quick-apps-dropdown">
+                    <button class="dropdown-btn bitcoin-font">
+                        <img src="images/hive.svg" alt="Quick Apps" class="nav-icon">
+                        <span>Quick Apps</span>
+                        <img src="images/arrow_down.svg" alt="Dropdown" class="dropdown-arrow">
+                    </button>
+                    <div class="dropdown-menu" id="quick-apps-menu">
+                        <a href="#" class="dropdown-item">Geforce Now</a>
+                        <a href="#" class="dropdown-item">Github</a>
+                        <a href="#" class="dropdown-item">Fortnite</a>
+                        <a href="#" class="dropdown-item">Discord</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="apps.html" class="nav-link bitcoin-font">
+                        <img src="images/apps.svg" alt="Apps" class="nav-icon">
+                        <span>Apps</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="chat.html" class="nav-link bitcoin-font">
+                        <img src="images/chat.svg" alt="Chat" class="nav-icon">
+                        <span>Chat</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="settings.html" class="nav-link bitcoin-font"> 
+                        <img src="images/settings.svg" alt="Settings" class="nav-icon"> 
+                        <span>Settings</span> 
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</body>
+</html>

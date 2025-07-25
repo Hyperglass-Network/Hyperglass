@@ -1,44 +1,85 @@
-// Sidebar functionality
-const menuToggle = document.getElementById('menu-toggle');
-const sidebar = document.getElementById('sidebar');
-const closeSidebar = document.getElementById('close-sidebar');
-const sidebarOverlay = document.getElementById('sidebar-overlay');
+function initializeNavbar() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('close-sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
 
-function openSidebar() {
-    sidebar.classList.add('open');
-    sidebarOverlay.classList.add('show');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeSidebarFunc() {
-    sidebar.classList.remove('open');
-    sidebarOverlay.classList.remove('show');
-    document.body.style.overflow = '';
-}
-
-menuToggle.addEventListener('click', openSidebar);
-closeSidebar.addEventListener('click', closeSidebarFunc);
-sidebarOverlay.addEventListener('click', closeSidebarFunc);
-
-// Quick Apps dropdown
-const quickAppsDropdown = document.getElementById('quick-apps-dropdown');
-const quickAppsMenu = document.getElementById('quick-apps-menu');
-
-quickAppsDropdown.addEventListener('click', (e) => {
-    e.preventDefault();
-    quickAppsDropdown.classList.toggle('show');
-    quickAppsMenu.classList.toggle('show');
-});
-
-// Close dropdown when clicking outside
-document.addEventListener('click', (e) => {
-    if (!quickAppsDropdown.contains(e.target)) {
-        quickAppsDropdown.classList.remove('show');
-        quickAppsMenu.classList.remove('show');
+    if (!menuToggle || !sidebar || !closeSidebar || !sidebarOverlay) {
+        setTimeout(initializeNavbar, 100);
+        return;
     }
-});
 
-// Prevent dropdown from closing when clicking inside
-quickAppsMenu.addEventListener('click', (e) => {
-    e.stopPropagation();
-});
+    console.log('Menu Toggle:', menuToggle);
+    console.log('Sidebar:', sidebar);
+    console.log('Close Sidebar:', closeSidebar);
+    console.log('Sidebar Overlay:', sidebarOverlay);
+
+    function openSidebar() {
+        if (sidebar && sidebarOverlay) {
+            sidebar.classList.add('open');
+            sidebarOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeSidebarFunc() {
+        if (sidebar && sidebarOverlay) {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', openSidebar);
+    } else {
+        console.error('Menu toggle button not found');
+    }
+
+    if (closeSidebar) {
+        closeSidebar.addEventListener('click', closeSidebarFunc);
+    } else {
+        console.error('Close sidebar button not found');
+    }
+
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeSidebarFunc);
+    } else {
+        console.error('Sidebar overlay not found');
+    }
+
+    const quickAppsDropdown = document.getElementById('quick-apps-dropdown');
+    const quickAppsMenu = document.getElementById('quick-apps-menu');
+
+    if (quickAppsDropdown && quickAppsMenu) {
+        quickAppsDropdown.addEventListener('click', (e) => {
+            e.preventDefault();
+            quickAppsDropdown.classList.toggle('show');
+            quickAppsMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!quickAppsDropdown.contains(e.target)) {
+                quickAppsDropdown.classList.remove('show');
+                quickAppsMenu.classList.remove('show');
+            }
+        });
+
+        quickAppsMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    } else {
+        console.error('Dropdown elements not found');
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', initializeNavbar);

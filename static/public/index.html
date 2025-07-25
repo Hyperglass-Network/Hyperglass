@@ -16,181 +16,129 @@
     <script src="register-sw.js" defer></script>
     <script src="search.js" defer></script>
     <script src="index.js" defer></script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is Ultraviolet (Web Proxy)?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Highly sophisticated proxy used for evading internet censorship or accessing websites in a controlled sandbox using the power of service-workers and more!"
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I unblock sites using Ultraviolet?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Simply head to an official site featuring Ultraviolet such as Holy Unblocker or Incognito! You can also self-host Ultraviolet on your own web server for maximum privacy."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What if Ultraviolet is blocked or not working?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Join the Titanium Network Discord at discord.gg/unblock!"
-            }
-          }
-        ]
-      }
-    </script>
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/navbars.css">
 </head>
 <body>
-    <!-- overlaying the sidebar over the regular navbar and website -->
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div id="navbar-placeholder"></div>
+    <script>
+        // Okay maybe i got claude to help me debug the sidebar not showing up
+        console.log('Starting navbar load...');
+        fetch('navbars.html')
+            .then(response => {
+                console.log('Fetch response:', response.ok);
+                return response.text();
+            })
+            .then(html => {
+                console.log('HTML loaded, length:', html.length);
+                document.getElementById('navbar-placeholder').innerHTML = html;
+                console.log('HTML inserted into page');
+                
+                const menuToggle = document.getElementById('menu-toggle');
+                const sidebar = document.getElementById('sidebar');
+                console.log('Menu toggle found:', !!menuToggle);
+                console.log('Sidebar found:', !!sidebar);
+                
+                initNavbar();
+            })
+            .catch(error => {
+                console.error('Error loading navbar:', error);
+            });
+            
+        function initNavbar() {
+            console.log('Initializing navbar...');
+            
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
 
-    <!-- sidebar code -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <span class="sidebar-title bitcoin-font">Hyperglass</span>
-            <button class="close-btn" id="close-sidebar">
-                <img src="images/close.svg" alt="Close">
-            </button>
-        </div>
-        
-        <ul class="sidebar-nav">
-            <!-- Move this into seperate file so it can be used on every page-->
-            <!-- Maybe the icons on the sidebar don't need to be there since already on topnav
-            bc no mobile support needed-->
-            <li>
-                <a href="#" class="sidebar-link active bitcoin-font">
-                    <img src="images/home.svg" alt="Home" class="sidebar-icon">
-                    <span>Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="apps.html" class="sidebar-link bitcoin-font">
-                    <img src="images/apps.svg" alt="Apps" class="sidebar-icon">
-                    <span>Apps</span>
-                </a>
-            </li>
-            <li>
-                <a href="chat.html" class="sidebar-link bitcoin-font">
-                    <img src="images/chat.svg" alt="Chat" class="sidebar-icon">
-                    <span>Chat</span>
-                </a>
-            </li>
-            <li>
-                <a href="settings.html" class="sidebar-link bitcoin-font">
-                    <img src="images/settings.svg" alt="Settings" class="sidebar-icon">
-                    <span>Settings</span>
-                </a>
-            </li>
-        </ul>
+            console.log('Elements found:');
+            console.log('- Menu Toggle:', !!menuToggle);
+            console.log('- Sidebar:', !!sidebar);
+            console.log('- Close Sidebar:', !!closeSidebar);
+            console.log('- Sidebar Overlay:', !!sidebarOverlay);
 
-        <div class="sidebar-section">
-            <h3 class="section-title">Quick Apps</h3>
-            <ul class="sidebar-nav">
-                <li>
-                    <a href="#" class="sidebar-link">
-                        <img src="images/hive.svg" alt="Geforce Now" class="sidebar-icon">
-                        <span>Geforce Now</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="sidebar-link">
-                        <img src="images/hive.svg" alt="Github" class="sidebar-icon">
-                        <span>Github</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="sidebar-link">
-                        <img src="images/hive.svg" alt="Fortnite" class="sidebar-icon">
-                        <span>Fortnite</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="sidebar-link">
-                        <img src="images/hive.svg" alt="Discord" class="sidebar-icon">
-                        <span>Discord</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+            if (!menuToggle || !sidebar || !closeSidebar || !sidebarOverlay) {
+                console.error('Some elements are missing!');
+                return;
+            }
 
-    <!-- top navbar -->
-    <nav id="navbar">
-        <div class="navbar-left">
-            <button class="menu-toggle" id="menu-toggle">
-                <img src="images/menu.svg" alt="Menu">
-            </button>
-            <img src="images/favicon.ico" alt="HyperGlass Logo" class="logoimg">
-            <!-- If I ever want to add the hyperglass text logo back-->
-            <!-- <span class="logo bitcoin-font">Hyperglass</span> -->
-        </div>
-        
-        <div class="navbar-right">
-            <ul class="nav-items">
-                <li class="nav-item dropdown" id="quick-apps-dropdown">
-                    <button class="dropdown-btn bitcoin-font">
-                        <img src="images/hive.svg" alt="Quick Apps" class="nav-icon">
-                        <span>Quick Apps</span>
-                        <img src="images/arrow_down.svg" alt="Dropdown" class="dropdown-arrow">
-                    </button>
-                    <div class="dropdown-menu" id="quick-apps-menu">
-                        <a href="#" class="dropdown-item">Geforce Now</a>
-                        <a href="#" class="dropdown-item">Github</a>
-                        <a href="#" class="dropdown-item">Fortnite</a>
-                        <a href="#" class="dropdown-item">Discord</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a href="apps.html" class="nav-link bitcoin-font">
-                        <img src="images/apps.svg" alt="Apps" class="nav-icon">
-                        <span>Apps</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="chat.html" class="nav-link bitcoin-font">
-                        <img src="images/chat.svg" alt="Chat" class="nav-icon">
-                        <span>Chat</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="settings.html" class="nav-link bitcoin-font"> 
-                        <img src="images/settings.svg" alt="Settings" class="nav-icon">
-                        <span>Settings</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+            function openSidebar() {
+                console.log('Opening sidebar...');
+                sidebar.classList.add('open');
+                sidebarOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
 
-    <main>
-        <div class="search-container">
-            <h2>Hyperglass</h2>
-            <form id="uv-form">
-                <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden">
-                <input id="uv-address" type="text" placeholder="Search the web freely" autofocus>
-            </form>
-            <p class="bitcoin-font">Search freely, browse securely</p>
-        </div>
-        <div class="desc left-margin">
-            <p id="uv-error"></p>
-            <pre id="uv-error-code"></pre>
-        </div>
-    </main>
-    <!-- <div class="container">
-        <h2>Welcome to HyperGlass</h2>
-        <p>Testing Testing Testing</p>
-    </div> -->
-    <script src="js/navbars.js"></script>
+            function closeSidebarFunc() {
+                console.log('Closing sidebar...');
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            menuToggle.addEventListener('click', function(e) {
+                console.log('Menu toggle clicked!');
+                e.preventDefault();
+                openSidebar();
+            });
+
+            closeSidebar.addEventListener('click', function(e) {
+                console.log('Close button clicked!');
+                e.preventDefault();
+                closeSidebarFunc();
+            });
+
+            sidebarOverlay.addEventListener('click', function(e) {
+                console.log('Overlay clicked!');
+                closeSidebarFunc();
+            });
+
+            const quickAppsDropdown = document.getElementById('quick-apps-dropdown');
+            const quickAppsMenu = document.getElementById('quick-apps-menu');
+
+            if (quickAppsDropdown && quickAppsMenu) {
+                quickAppsDropdown.addEventListener('click', (e) => {
+                    console.log('Dropdown clicked!');
+                    e.preventDefault();
+                    quickAppsDropdown.classList.toggle('show');
+                    quickAppsMenu.classList.toggle('show');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!quickAppsDropdown.contains(e.target)) {
+                        quickAppsDropdown.classList.remove('show');
+                        quickAppsMenu.classList.remove('show');
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                    closeSidebarFunc();
+                }
+            });
+            console.log('Navbar initialization complete!');
+        }
+    </script>
+    
+    <div class="flex-center">
+        <h3 class="galaxy-text">Hyperglass</h3>
+        <form id="uv-form">
+            <input
+                id="uv-search-engine"
+                value="https://www.google.com/search?q=%s"
+                type="hidden"
+            />
+            <input id="uv-address" type="text" placeholder="Search the web freely" />
+        </form>
+        <p class="bitcoin-font quotes">Search freely, browse securely</p>
+    </div>
+    <div class="desc">
+        <p id="uv-error"></p>
+        <pre id="uv-error-code"></pre>
+    </div>
 </body>
 </html>

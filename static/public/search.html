@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <title>HyperGlass</title>
+    <style>
+        .loader {
+            width: 50px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 8px solid lightblue;
+            border-right-color: orange;
+            animation: l2 1s infinite linear;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        @keyframes l2 {to{transform: rotate(1turn)}}
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #uv-frame:not([style*="display: none"]) ~ * {
+            display: none !important;
+        }
+        
+        #uv-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 9999;
+            background-color: white;
+        }
+
+        .error-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.1);
+            color: red;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader" id="loader"></div>
+    <div class="error-message" id="error-message">
+        <h3>Error loading page</h3>
+        <p id="error-text"></p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+    <iframe style="display: none;" id="uv-frame"></iframe>
+
+    <script src="baremux/index.js"></script>
+    <script src="uv/uv.bundle.js"></script>
+    <script src="uv/uv.config.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loader = document.getElementById('loader');
+            const errorMessage = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+            const frame = document.getElementById('uv-frame');
+            
+            try {
+                const url = sessionStorage.getItem('uvUrl');
+                const originalQuery = sessionStorage.getItem('uvOriginalQuery');
+                
+                if (!url) {
+                    throw new Error('No URL provided. Please go back and try again.');
+                }
+
+                const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
+                let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";                
+                if (await connection.getTransport() !== "/epoxy/index.mjs") {
+                    await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
+                }
+                
+                frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
+                
+                frame.onload = () => {
+                    loader.style.display = 'none';
+                    frame.style.display = 'block';
+                };
+                
+                frame.onerror = () => {
+                    loader.style.display = 'none';
+                    errorText.textContent = 'Failed to load the requested page.';
+                    errorMessage.style.display = 'block';
+                };
+                
+                setTimeout(() => {
+                    if (frame.style.display === 'none') {
+                        loader.style.display = 'none';
+                        frame.style.display = 'block';
+                    }
+                }, 20000);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                loader.style.display = 'none';
+                errorText.textContent = error.message || 'An unexpected error occurred.';
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

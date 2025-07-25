@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* That one yt tutorial helped save so much time and vars are so nice in css*/
-/* Note to self: use sass later on */
 :root{
     --base-clr: rgba(17, 18, 26, 0.7);/*#11121a;*/
     --line-clr: #42434a;
@@ -312,75 +310,45 @@ body {
     visibility: visible;
 }
 
-main {
-    padding: 2rem;
-    position: relative;
-    z-index: 1;
-}
-
-.flex-center {
+.special-icons {
     display: flex;
-    justify-content: center;
     align-items: center;
-    min-height: 80vh;
+    gap: 0.5rem;
 }
 
-#uv-form {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
+.special-icons .icons {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 200ms ease, transform 100ms ease;
+    padding: 4px;
+    box-sizing: border-box;
 }
 
-#uv-address {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--line-clr);
-    border-radius: 0.5rem;
-    background-color: var(--base-clr);
-    color: var(--text-clr);
-    font-size: 1rem;
-    transition: border-color 200ms ease;
-    text-align: center;
+.special-icons .icons:hover {
+    background-color: var(--hover-clr);
+    transform: scale(1.05);
 }
 
-.search-container {
+.special-icons img {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    min-height: 80vh;
     justify-content: center;
+    padding: 4px;
+    border-radius: 6px;
+    line-height: 0;
 }
 
-.search-container h2 {
-    color: var(--text-clr);
-    font-size: 2.4rem;
-    margin: 0;
-}
-
-.search-container p {
-    color: var(--secondary-text-clr);
-    font-size: 1rem;
-    margin: 0;
-}
-
-.container {
-    border: 1px solid var(--line-clr);
-    border-radius: 1rem;
-    margin-bottom: 20px;
-    padding: 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: rgba(17, 18, 26, 0.8);
-    backdrop-filter: blur(10px);
-}
-
-.container h2 {
-    margin-bottom: 1rem;
-}
-
-.container p {
-    color: var(--secondary-text-clr);
+.icons {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+    display: inline-block;
 }
 
 .bitcoin-font {
@@ -393,8 +361,8 @@ main {
         "CRSV" 0.5,
         "ELSH" 0,
         "ELXP" 0 !important;
-}
-
+    }
+    
 @media (max-width: 768px) {
     .nav-items {
         display: none;
@@ -408,7 +376,7 @@ main {
         padding: 1.5rem;
         border: none;
     }
-
+    
     #sidebar {
         width: 100%;
         left: -100%;
