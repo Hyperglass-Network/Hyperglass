@@ -1,3 +1,4 @@
+console.log("navbars.js is running");
 function initializeNavbar() {
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
@@ -81,5 +82,23 @@ function initializeNavbar() {
     });
 }
 
+function search_icons() {
+    const icons = document.getElementsByClassName('icons');
+    Array.from(icons).forEach(icon => {
+        icon.addEventListener('click', function () {
+            // window.location.href = 'https://google.com';
+            const dataUrl = icon.getAttribute('data-url');
+            const url = search(dataUrl, dataUrl);
+            sessionStorage.setItem('uvUrl', url);
+            sessionStorage.setItem('uvOriginalQuery', dataUrl);
+            window.location.href = 'search.html';
+            console.log("redirecting to search page");
+        });
+    });
+}
 
-document.addEventListener('DOMContentLoaded', initializeNavbar);
+document.addEventListener('DOMContentLoaded', () => {
+    initializeNavbar();
+    search_icons();
+});
+// document.addEventListener('DOMContentLoaded', initializeNavbar);
