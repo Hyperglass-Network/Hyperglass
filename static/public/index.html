@@ -194,9 +194,29 @@
         </form>
         <p class="bitcoin-font quotes">hii bestie!!!</p>
     </div>
+    <script src="searchbar.js"></script>
     <div class="desc">
         <p id="uv-error"></p>
         <pre id="uv-error-code"></pre>
     </div>
+    <!-- Im not making another js file or adding to the index.js file for fear of borking something again-->
+    <script>
+        const inputasdf = document.getElementById('uv-address');
+        const formasdf = document.getElementById('uv-form');
+
+        function updateWidth() {
+        const lenasdf = inputasdf.value.length;
+
+        if (lenasdf >= 30) {
+            formasdf.style.width = '50%';
+        } else if (lenasdf >= 24) {
+            formasdf.style.width = '35%';
+        } else {
+            formasdf.style.width = '25%';
+        }
+        }
+        formasdf.style.width = '25%';
+        inputasdf.addEventListener('input', updateWidth);
+    </script>
 </body>
 </html>
