@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --base-clr: rgba(17, 18, 26, 0.7);/*#11121a;*/
+    --line-clr: #42434a;
+    --hover-clr: #222533;
+    --text-clr: #e6e6ef;
+    --accent-clr: #1b61e2;/*#5e63ff;*/
+    --secondary-text-clr: #b0b3c1;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    color: var(--text-clr);
+    border-radius: 0.5rem;
+    transition: background-color 200ms ease;
+    font-size: 0.9rem;
+}
+
+.nav-icon {
+    width: 32px;
+    height: 32px;
+    filter: brightness(0) invert(1);
+}
+
+.bitcoin-font {
+    font-family: "Bitcount Prop Single", system-ui !important;
+    font-optical-sizing: auto !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-variation-settings:
+        "slnt" 0,
+        "CRSV" 0.5,
+        "ELSH" 0,
+        "ELXP" 0 !important;
+    }
+    
+@media (max-width: 768px) {
+    .nav-items {
+        display: none;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1.5rem;
+        border: none;
+    }
+    
+    #sidebar {
+        width: 100%;
+        left: -100%;
+    }
+}

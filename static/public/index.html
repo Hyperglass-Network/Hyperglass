@@ -1,126 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="Hyperglass is a fast and easy to use web proxy that will let you bypass most (if not all) restrictions">
-    <meta name="keywords" content="proxy, web proxy, ultraviolet, service workers, unblock websites, unblock chromebook, free web proxy, proxy list, proxy sites, un block chromebook, online proxy, proxy server, proxysite, proxy youtube, bypass securly, bypass iboss, bypass lightspeed filter, holy unblocker, chromebooks, titanium network, unblock youtube, youtube proxy, unblocked youtube, youtube unblocked, hyperglass, proxy">
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta name="description" content="Hyperglass is a fast and easy to use web proxy that will let you bypass most (if not all) restrictions" />
+    <meta name="keywords" content="proxy, web proxy, ultraviolet, service workers, unblock websites, unblock chromebook, free web proxy, proxy list, proxy sites, un block chromebook, online proxy, proxy server, proxysite, proxy youtube, bypass securly, bypass iboss, bypass lightspeed filter, holy unblocker, chromebooks, titanium network, unblock youtube, youtube proxy, unblocked youtube, youtube unblocked, hyperglass, proxy" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <title>HyperGlass</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet" />
     
-    <!-- Load UV scripts first -->
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/navbars.css" />
+
+    <!-- load uv scripts -->
     <script src="baremux/index.js" defer></script>
     <script src="epoxy/index.js" defer></script>
     <script src="uv/uv.bundle.js" defer></script>
     <script src="uv/uv.config.js" defer></script>
     <script src="register-sw.js" defer></script>
     <script src="search.js" defer></script>
-    
-    <!-- Load custom scripts after UV - REMOVE navbars.js from here -->
     <script src="index.js" defer></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/navbars.css">
 </head>
 <body>
     <div id="navbar-placeholder"></div>
-    
+
+    <div class="flex-center">
+        <h3 class="galaxy-text">Hyperglass</h3>
+        <form id="uv-form">
+            <input id="uv-search-engine" type="hidden" value="https://www.duckduckgo.com/search?q=%s" />
+            <input id="uv-address" type="text" placeholder="Search the web freely" />
+        </form>
+        <p class="bitcoin-font quotes">hii bestie!!!</p>
+    </div>
+
+    <div class="desc">
+        <p id="uv-error"></p>
+        <pre id="uv-error-code"></pre>
+    </div>
+
     <script>
-        // Fixed navbar loading system
-        console.log('Starting navbar load...');
-        
-        // Flag to track if navbar is loaded
+        // Load navbar from external HTML
         window.navbarLoaded = false;
-        
+
         async function loadNavbar() {
             try {
-                console.log('Fetching navbar HTML...');
-                const response = await fetch('navbars.html');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const html = await response.text();
-                console.log('HTML loaded, length:', html.length);
-                
-                // Insert HTML
-                document.getElementById('navbar-placeholder').innerHTML = html;
-                console.log('HTML inserted into page');
-                
-                // Wait a tiny bit for DOM to settle
-                await new Promise(resolve => setTimeout(resolve, 50));
-                
-                // Now initialize navbar
+                const res = await fetch('navbars.html');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                document.getElementById('navbar-placeholder').innerHTML = await res.text();
+                await new Promise(r => setTimeout(r, 50));
                 await initNavbar();
-                
-                // Set flag that navbar is ready
                 window.navbarLoaded = true;
-                
-                // Dispatch custom event
                 window.dispatchEvent(new CustomEvent('navbarReady'));
-                
-                console.log('Navbar fully loaded and initialized!');
-                
-            } catch (error) {
-                console.error('Error loading navbar:', error);
-                // Retry once after 500ms
+            } catch (err) {
+                console.error('Navbar load failed:', err);
                 setTimeout(loadNavbar, 500);
             }
         }
-        
+
         async function initNavbar() {
-            console.log('Initializing navbar...');
-            
             const menuToggle = document.getElementById('menu-toggle');
             const sidebar = document.getElementById('sidebar');
             const closeSidebar = document.getElementById('close-sidebar');
             const sidebarOverlay = document.getElementById('sidebar-overlay');
 
-            console.log('Elements found:');
-            console.log('- Menu Toggle:', !!menuToggle);
-            console.log('- Sidebar:', !!sidebar);
-            console.log('- Close Sidebar:', !!closeSidebar);
-            console.log('- Sidebar Overlay:', !!sidebarOverlay);
+            if (!menuToggle || !sidebar || !closeSidebar || !sidebarOverlay) throw new Error('Navbar elements missing');
 
-            if (!menuToggle || !sidebar || !closeSidebar || !sidebarOverlay) {
-                console.error('Some navbar elements are missing!');
-                throw new Error('Required navbar elements not found');
-            }
-
-            function openSidebar() {
-                console.log('Opening sidebar...');
+            menuToggle.addEventListener('click', (e) => {
+                e.preventDefault();
                 sidebar.classList.add('open');
                 sidebarOverlay.classList.add('show');
                 document.body.style.overflow = 'hidden';
-            }
+            });
 
-            function closeSidebarFunc() {
-                console.log('Closing sidebar...');
+            closeSidebar.addEventListener('click', (e) => {
+                e.preventDefault();
                 sidebar.classList.remove('open');
                 sidebarOverlay.classList.remove('show');
                 document.body.style.overflow = '';
-            }
-
-            // Add event listeners
-            menuToggle.addEventListener('click', function(e) {
-                console.log('Menu toggle clicked!');
-                e.preventDefault();
-                openSidebar();
             });
 
-            closeSidebar.addEventListener('click', function(e) {
-                console.log('Close button clicked!');
-                e.preventDefault();
-                closeSidebarFunc();
-            });
-
-            sidebarOverlay.addEventListener('click', function(e) {
-                console.log('Overlay clicked!');
-                closeSidebarFunc();
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('show');
+                document.body.style.overflow = '';
             });
 
             const quickAppsDropdown = document.getElementById('quick-apps-dropdown');
@@ -128,7 +93,6 @@
 
             if (quickAppsDropdown && quickAppsMenu) {
                 quickAppsDropdown.addEventListener('click', (e) => {
-                    console.log('Dropdown clicked!');
                     e.preventDefault();
                     quickAppsDropdown.classList.toggle('show');
                     quickAppsMenu.classList.toggle('show');
@@ -144,79 +108,61 @@
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-                    closeSidebarFunc();
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('show');
+                    document.body.style.overflow = '';
                 }
             });
 
-            initializeIconSearch();            
-            console.log('Navbar initialization complete!');
+            initializeIconSearch();
         }
-        
+
         function initializeIconSearch() {
-            console.log('Initializing icon search...');
             const icons = document.getElementsByClassName('icons');
-            
             Array.from(icons).forEach(icon => {
                 icon.addEventListener('click', function (e) {
                     e.preventDefault();
-                    console.log('Icon clicked:', icon.alt);
-                    
                     const dataUrl = icon.getAttribute('data-url');
                     if (dataUrl) {
                         const url = search(dataUrl, dataUrl);
                         sessionStorage.setItem('uvUrl', url);
                         sessionStorage.setItem('uvOriginalQuery', dataUrl);
                         window.location.href = 'search.html';
-                        console.log("Redirecting to search page for:", dataUrl);
                     }
                 });
             });
-            
-            console.log('Icon search initialized for', icons.length, 'icons');
         }
-        
+
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', loadNavbar);
         } else {
             loadNavbar();
         }
     </script>
-    
-    <div class="flex-center">
-        <h3 class="galaxy-text">Hyperglass</h3>
-        <form id="uv-form">
-            <input
-                id="uv-search-engine"
-                value="https://www.duckduckgo.com/search?q=%s"
-                type="hidden"
-            />
-            <input id="uv-address" type="text" placeholder="Search the web freely" />
-        </form>
-        <p class="bitcoin-font quotes">hii bestie!!!</p>
-    </div>
-    <script src="searchbar.js"></script>
-    <div class="desc">
-        <p id="uv-error"></p>
-        <pre id="uv-error-code"></pre>
-    </div>
-    <!-- Im not making another js file or adding to the index.js file for fear of borking something again-->
+
     <script>
         const inputasdf = document.getElementById('uv-address');
         const formasdf = document.getElementById('uv-form');
 
         function updateWidth() {
-        const lenasdf = inputasdf.value.length;
+            const len = inputasdf.value.length;
+            if (len >= 30) {
+                formasdf.style.width = '50%';
+            } else if (len >= 24) {
+                formasdf.style.width = '35%';
+            } else {
+                formasdf.style.width = '25%';
+            }
+        }
 
-        if (lenasdf >= 30) {
-            formasdf.style.width = '50%';
-        } else if (lenasdf >= 24) {
-            formasdf.style.width = '35%';
-        } else {
-            formasdf.style.width = '25%';
-        }
-        }
         formasdf.style.width = '25%';
         inputasdf.addEventListener('input', updateWidth);
+    </script>
+    <script src="searchbar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.homeside').classList.add('active');
+        });
     </script>
 </body>
 </html>

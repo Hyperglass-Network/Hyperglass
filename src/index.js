@@ -4,7 +4,7 @@ import { hostname } from "node:os";
 import wisp from "wisp-server-node";
 import Fastify from "fastify";
 import fastifyStatic from "@fastify/static";
-
+// import fs from "node:fs";
 // static paths
 import { publicPath } from "ultraviolet-static";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
@@ -68,6 +68,7 @@ fastify.server.on("listening", () => {
 	);
 });
 
+
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
 
@@ -80,6 +81,10 @@ function shutdown() {
 let port = parseInt(process.env.PORT || "");
 
 if (isNaN(port)) port = 8082;
+
+fastify.setNotFoundHandler((request, reply) => {
+  reply.sendFile('index.html', publicPath);
+});
 
 fastify.listen({
 	port: port,

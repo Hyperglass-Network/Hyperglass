@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <title>HyperGlass</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/navbars.css" />
     <style>
         .loader {
             width: 50px;
@@ -28,6 +33,7 @@
             height: 100%;
             width: 100%;
             overflow: hidden;
+            background: linear-gradient(135deg, #2c3e72 0%, #3a4d7a 50%, #2c3e72 100%);
         }
 
         #uv-frame:not([style*="display: none"]) ~ * {
@@ -36,12 +42,11 @@
         
         #uv-frame {
             position: fixed;
-            top: 0;
+            top: 60px;
             left: 0;
             width: 100vw;
             height: 100vh;
             border: none;
-            z-index: 9999;
             background-color: white;
         }
 
@@ -50,28 +55,279 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 0, 0, 0.1);
-            color: red;
-            padding: 20px;
-            border-radius: 8px;
+            background: #1e1e1e;
+            border: 1px solid #404040;
+            border-radius: 16px;
+            padding: 48px 40px;
+            max-width: 500px;
+            width: 90%;
             text-align: center;
-            font-family: Arial, sans-serif;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            backdrop-filter: blur(10px);
             display: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ff6b6b;
+        }
+
+        .error-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 24px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            box-shadow: 0 8px 16px rgba(255, 107, 107, 0.3);
+        }
+
+        .error-message h3 {
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 16px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .error-message p {
+            color: #b0b0b0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0 0 32px 0;
+            font-weight: 400;
+        }
+
+        .back-button {
+            background: #4d96ff;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(77, 150, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.5s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(77, 150, 255, 0.4);
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .error-message {
+                padding: 32px 24px;
+                margin: 20px;
+            }
+            
+            .error-message h3 {
+                font-size: 24px;
+            }
+            
+            .error-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="nav-placeholder"></div>
+
+    <script>
+    // Load navigation from external HTML
+    window.navLoaded = false;
+
+    async function loadNavigation() {
+        try {
+            const res = await fetch('searchnav.html');
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            
+            const html = await res.text();
+            document.getElementById('nav-placeholder').innerHTML = html;
+            
+           await new Promise(r => setTimeout(r, 50));
+            
+            await initializeNavbar();
+            
+            window.navLoaded = true;
+            window.dispatchEvent(new CustomEvent('navReady'));
+            console.log('Navigation loaded successfully');
+            
+        } catch (err) {
+            console.error('Navigation load failed:', err);
+            document.getElementById('nav-placeholder').innerHTML = 
+                '<div style="color: #ff6b6b; text-align: center; padding: 20px;">Navigation failed to load</div>';
+            setTimeout(loadNavigation, 500);
+        }
+    }
+
+    async function initializeNavbar() {
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+        if (!menuToggle || !sidebar || !closeSidebar || !sidebarOverlay) {
+            console.error('Navigation elements not found, retrying...');
+            await new Promise(r => setTimeout(r, 100));
+            return initializeNavbar();
+        }
+
+        console.log('Initializing navbar with elements:', { menuToggle, sidebar, closeSidebar, sidebarOverlay });
+
+        function openSidebar() {
+            if (sidebar && sidebarOverlay) {
+                sidebar.classList.add('open');
+                sidebarOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                console.log('Sidebar opened');
+            }
+        }
+
+        function closeSidebarFunc() {
+            if (sidebar && sidebarOverlay) {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+                console.log('Sidebar closed');
+            }
+        }
+
+        menuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            openSidebar();
+        });
+
+        closeSidebar.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeSidebarFunc();
+        });
+
+        sidebarOverlay.addEventListener('click', closeSidebarFunc);
+
+        const quickAppsDropdown = document.getElementById('quick-apps-dropdown');
+        const quickAppsMenu = document.getElementById('quick-apps-menu');
+
+        if (quickAppsDropdown && quickAppsMenu) {
+            quickAppsDropdown.addEventListener('click', (e) => {
+                e.preventDefault();
+                quickAppsDropdown.classList.toggle('show');
+                quickAppsMenu.classList.toggle('show');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!quickAppsDropdown.contains(e.target)) {
+                    quickAppsDropdown.classList.remove('show');
+                    quickAppsMenu.classList.remove('show');
+                }
+            });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                closeSidebarFunc();
+            }
+        });
+
+        InitIconSearch();
+    }
+
+    function InitIconSearch() {
+        const icons = document.getElementsByClassName('icons');
+        console.log('Found icons:', icons.length);
+        
+        Array.from(icons).forEach(icon => {
+            icon.addEventListener('click', function (e) {
+                e.preventDefault();
+                const dataUrl = icon.getAttribute('data-url');
+                console.log('Icon clicked, data-url:', dataUrl);
+                
+                if (dataUrl) {
+                    if (typeof search === 'function') {
+                        try {
+                            const url = search(dataUrl, dataUrl);
+                            console.log('Search function returned:', url);
+                            sessionStorage.setItem('uvUrl', url);
+                            sessionStorage.setItem('uvOriginalQuery', dataUrl);
+                            window.location.href = 'search.html';
+                        } catch (error) {
+                            console.error('Error in search function:', error);
+                            const fallbackUrl = dataUrl.startsWith('http') ? dataUrl : 'https://' + dataUrl;
+                            sessionStorage.setItem('uvUrl', fallbackUrl);
+                            sessionStorage.setItem('uvOriginalQuery', dataUrl);
+                            window.location.href = 'search.html';
+                        }
+                    } else {
+                        console.error('Search function not available, using fallback');
+                        const fallbackUrl = dataUrl.startsWith('http') ? dataUrl : 'https://' + dataUrl;
+                        sessionStorage.setItem('uvUrl', fallbackUrl);
+                        sessionStorage.setItem('uvOriginalQuery', dataUrl);
+                        window.location.href = 'search.html';
+                    }
+                } else {
+                    console.error('No data-url attribute found');
+                }
+            });
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadNavigation);
+    } else {
+        loadNavigation();
+    }
+    </script>
     <div class="loader" id="loader"></div>
     <div class="error-message" id="error-message">
+        <div class="error-icon">⚠</div>
         <h3>Error loading page</h3>
-        <p id="error-text"></p>
-        <button onclick="window.history.back()">Go Back</button>
+        <p id="error-text">Something went wrong while loading this page. Please try again or go back to continue browsing.</p>
+        <button class="back-button" onclick="window.history.back()">Go Back</button>
     </div>
     <iframe style="display: none;" id="uv-frame"></iframe>
 
     <script src="baremux/index.js"></script>
     <script src="uv/uv.bundle.js"></script>
     <script src="uv/uv.config.js"></script>
+    <script src="search.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
