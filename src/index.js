@@ -1,12 +1,14 @@
 import { createServer } from "node:http";
 import { join } from "node:path";
 import { hostname } from "node:os";
+import { fileURLToPath } from "node:url";
 import wisp from "wisp-server-node";
 import Fastify from "fastify";
 import fastifyStatic from "@fastify/static";
-// import fs from "node:fs";
+
 // static paths
-import { publicPath } from "ultraviolet-static";
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const publicPath = join(__dirname, '../public'); // Move static/public to root/public
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
@@ -67,7 +69,6 @@ fastify.server.on("listening", () => {
 		}:${address.port}`
 	);
 });
-
 
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
