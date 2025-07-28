@@ -1,27 +1,36 @@
 {
-	"name": "uv-app",
-	"version": "1.0.0",
-	"description": "Ultraviolet instance",
+	"name": "uv-app-optimized",
+	"version": "2.0.0",
+	"description": "High-Performance Ultraviolet Proxy Instance",
 	"type": "module",
 	"engines": {
 		"npm": ">=7.0.0",
-		"node": ">=16.0.0"
+		"node": ">=18.0.0"
 	},
 	"scripts": {
-		"start": "node src/index.js",
+		"start": "NODE_ENV=production node --max-old-space-size=4096 src/index.js",
+		"dev": "NODE_ENV=development node --inspect src/index.js",
 		"format": "prettier --config .prettierrc.js --write .",
 		"lint": "eslint ./src/",
 		"lint:fix": "eslint ./src/ --fix",
-		"build": "pnpm --filter static build",
-		"dev": "pnpm build && pnpm start"
+		"benchmark": "node scripts/benchmark.js",
+		"prestart": "node scripts/precompress.js"
 	},
 	"keywords": [
-		"proxy"
+		"proxy",
+		"ultraviolet",
+		"high-performance",
+		"web-proxy",
+		"fastify"
 	],
 	"author": "",
 	"license": "GPL-3.0-or-later",
 	"dependencies": {
 		"@fastify/static": "^8.0.2",
+		"@fastify/compress": "^8.0.1",
+		"@fastify/rate-limit": "^10.1.1",
+		"@fastify/helmet": "^12.0.1",
+		"@fastify/etag": "^6.0.0",
 		"@mercuryworkshop/bare-mux": "^2.1.6",
 		"@mercuryworkshop/epoxy-transport": "^2.1.25",
 		"@titaniumnetwork-dev/ultraviolet": "^3.2.10",
@@ -31,7 +40,8 @@
 	},
 	"devDependencies": {
 		"eslint": "^9.13.0",
-		"prettier": "^3.3.3"
+		"prettier": "^3.3.3",
+		"autocannon": "^7.15.0"
 	},
 	"packageManager": "pnpm@9.12.2"
 }
