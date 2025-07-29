@@ -298,26 +298,25 @@ fastify.setErrorHandler((error, request, reply) => {
     });
 });
 
-// 404 handler with SPA support
-fastify.setNotFoundHandler({
-    preValidation: (req, reply, done) => {
-        // Skip 404 handling for API routes or static assets
-        if (req.url.startsWith('/api/') || 
-            req.url.includes('.') || 
-            req.url.startsWith('/uv/') ||
-            req.url.startsWith('/epoxy/') ||
-            req.url.startsWith('/baremux/')) {
-            const error = new Error('Not Found');
-            error.statusCode = 404;
-            done(error);
-            return;
-        }
-        done();
-    }
-}, (request, reply) => {
-    // Serve index.html for SPA routes
-    reply.sendFile('index.html', publicPath);
-});
+// // 404 handler with SPA support
+// fastify.setNotFoundHandler((request, reply) => {
+//     // For SPA routes (no file extension and not API/service routes)
+//     if (!request.url.includes('.') && 
+//         !request.url.startsWith('/api/') && 
+//         !request.url.startsWith('/uv/') && 
+//         !request.url.startsWith('/epoxy/') && 
+//         !request.url.startsWith('/baremux/')) { 
+//         // Serve index.html for SPA routes 
+//         reply.sendFile('index.html', publicPath); 
+//     } else {
+//         // Return proper 404 for missing static files
+//         reply.code(404).send({
+//             error: 'Not Found',
+//             message: 'The requested resource was not found',
+//             timestamp: new Date().toISOString()
+//         });
+//     }
+// });
 
 // Graceful shutdown handling
 const gracefulShutdown = async (signal) => {
