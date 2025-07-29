@@ -8,8 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet" />
-    <!-- <link rel="stylesheet" href="css/index.css"> -->
-    <!-- <link rel="stylesheet" href="css/navbars.css"> -->
     <style>
         .loader {
             width: 50px;
@@ -24,8 +22,83 @@
             right: 0;
             bottom: 0;
             margin: auto;
+            z-index: 10001;
         }
         @keyframes l2 {to{transform: rotate(1turn)}}
+
+        /* Progressive loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(44, 62, 114, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            font-family: 'Bitcount Prop Single', monospace;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #4d96ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .progress-container {
+            width: 300px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4d96ff, #00d4ff);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            margin-top: 15px;
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+        }
+
+        .loading-stage {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
         body, html {
             margin: 0;
@@ -45,9 +118,15 @@
             top: 60px;
             left: 0;
             width: 100vw;
-            height: 100vh;
+            height: calc(100vh - 60px);
             border: none;
             background-color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #uv-frame.loaded {
+            opacity: 1;
         }
 
         .error-message {
@@ -70,6 +149,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             position: relative;
             overflow: hidden;
+            z-index: 10002;
         }
 
         .error-message::before {
@@ -166,12 +246,15 @@
                 height: 56px;
                 font-size: 24px;
             }
+
+            .progress-container {
+                width: 250px;
+            }
         }
     </style>
     <script src="js/search.js"></script>
     <script src="js/searchpage.js"></script>
     <script src="js/searchnav.js"></script>
-    <!-- <link rel="stylesheet" href="css/searchnav.css"> -->
 </head>
 <body>
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
@@ -257,11 +340,11 @@
         
         <div class="navbar-right">
             <div class="special-icons">
-                <!-- src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E"  -->
                 <img class="icons" 
-                    src="images/geforcenow.png"
+                    src="images/apps.svg"
                     alt="GeForce Now"
-                    data-url="play.geforcenow.com">
+                    data-url="play.geforcenow.com"
+                    style="filter: invert(1);">
                 <img class="icons" 
                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E" 
                     alt="GitHub"
@@ -283,159 +366,27 @@
             </ul>
         </div>
     </nav>
-    <!-- <div id="nav-placeholder"></div>
 
-    <script>
-    // Load navigation from external HTML
-    window.navLoaded = false;
+    <!-- Progressive Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-stage" id="loading-stage">Initializing...</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0%</div>
+        </div>
+    </div>
 
-    async function loadNavigation() {
-        try {
-            const res = await fetch('searchnav.html');
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            
-            const html = await res.text();
-            document.getElementById('nav-placeholder').innerHTML = html;
-            
-           await new Promise(r => setTimeout(r, 50));
-            
-            await initializeNavbar();
-            
-            window.navLoaded = true;
-            window.dispatchEvent(new CustomEvent('navReady'));
-            console.log('Navigation loaded successfully');
-            
-        } catch (err) {
-            console.error('Navigation load failed:', err);
-            document.getElementById('nav-placeholder').innerHTML = 
-                '<div style="color: #ff6b6b; text-align: center; padding: 20px;">Navigation failed to load</div>';
-            setTimeout(loadNavigation, 500);
-        }
-    }
-
-    async function initializeNavbar() {
-        const menuToggle = document.getElementById('menu-toggle');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('close-sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-        if (!menuToggle || !sidebar || !closeSidebar || !sidebarOverlay) {
-            console.error('Navigation elements not found, retrying...');
-            await new Promise(r => setTimeout(r, 100));
-            return initializeNavbar();
-        }
-
-        console.log('Initializing navbar with elements:', { menuToggle, sidebar, closeSidebar, sidebarOverlay });
-
-        function openSidebar() {
-            if (sidebar && sidebarOverlay) {
-                sidebar.classList.add('open');
-                sidebarOverlay.classList.add('show');
-                document.body.style.overflow = 'hidden';
-                console.log('Sidebar opened');
-            }
-        }
-
-        function closeSidebarFunc() {
-            if (sidebar && sidebarOverlay) {
-                sidebar.classList.remove('open');
-                sidebarOverlay.classList.remove('show');
-                document.body.style.overflow = '';
-                console.log('Sidebar closed');
-            }
-        }
-
-        menuToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            openSidebar();
-        });
-
-        closeSidebar.addEventListener('click', (e) => {
-            e.preventDefault();
-            closeSidebarFunc();
-        });
-
-        sidebarOverlay.addEventListener('click', closeSidebarFunc);
-
-        const quickAppsDropdown = document.getElementById('quick-apps-dropdown');
-        const quickAppsMenu = document.getElementById('quick-apps-menu');
-
-        if (quickAppsDropdown && quickAppsMenu) {
-            quickAppsDropdown.addEventListener('click', (e) => {
-                e.preventDefault();
-                quickAppsDropdown.classList.toggle('show');
-                quickAppsMenu.classList.toggle('show');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!quickAppsDropdown.contains(e.target)) {
-                    quickAppsDropdown.classList.remove('show');
-                    quickAppsMenu.classList.remove('show');
-                }
-            });
-        }
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-                closeSidebarFunc();
-            }
-        });
-
-        InitIconSearch();
-    }
-
-    function InitIconSearch() {
-        const icons = document.getElementsByClassName('icons');
-        console.log('Found icons:', icons.length);
-        
-        Array.from(icons).forEach(icon => {
-            icon.addEventListener('click', function (e) {
-                e.preventDefault();
-                const dataUrl = icon.getAttribute('data-url');
-                console.log('Icon clicked, data-url:', dataUrl);
-                
-                if (dataUrl) {
-                    if (typeof search === 'function') {
-                        try {
-                            const url = search(dataUrl, dataUrl);
-                            console.log('Search function returned:', url);
-                            sessionStorage.setItem('uvUrl', url);
-                            sessionStorage.setItem('uvOriginalQuery', dataUrl);
-                            window.location.href = 'search.html';
-                        } catch (error) {
-                            console.error('Error in search function:', error);
-                            const fallbackUrl = dataUrl.startsWith('http') ? dataUrl : 'https://' + dataUrl;
-                            sessionStorage.setItem('uvUrl', fallbackUrl);
-                            sessionStorage.setItem('uvOriginalQuery', dataUrl);
-                            window.location.href = 'search.html';
-                        }
-                    } else {
-                        console.error('Search function not available, using fallback');
-                        const fallbackUrl = dataUrl.startsWith('http') ? dataUrl : 'https://' + dataUrl;
-                        sessionStorage.setItem('uvUrl', fallbackUrl);
-                        sessionStorage.setItem('uvOriginalQuery', dataUrl);
-                        window.location.href = 'search.html';
-                    }
-                } else {
-                    console.error('No data-url attribute found');
-                }
-            });
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadNavigation);
-    } else {
-        loadNavigation();
-    }
-    </script> -->
-    <div class="loader" id="loader"></div>
     <div class="error-message" id="error-message">
         <div class="error-icon">⚠</div>
         <h3>Error loading page</h3>
         <p id="error-text">Something went wrong while loading this page. Please try again or go back to continue browsing.</p>
         <button class="back-button" onclick="window.history.back()">Go Back</button>
     </div>
-    <iframe style="display: none;" id="uv-frame"></iframe>
+    
+    <iframe id="uv-frame"></iframe>
 
     <script src="baremux/index.js"></script>
     <script src="uv/uv.bundle.js"></script>
@@ -443,11 +394,83 @@
     <script src="js/search.js"></script>
     
     <script>
+        class ProgressiveLoader {
+            constructor() {
+                this.loadingOverlay = document.getElementById('loading-overlay');
+                this.progressBar = document.getElementById('progress-bar');
+                this.progressText = document.getElementById('progress-text');
+                this.loadingStage = document.getElementById('loading-stage');
+                this.errorMessage = document.getElementById('error-message');
+                this.errorText = document.getElementById('error-text');
+                this.frame = document.getElementById('uv-frame');
+                
+                this.currentProgress = 0;
+                this.loadingStages = [
+                    'Initializing connection...',
+                    'Setting up transport...',
+                    'Connecting to server...',
+                    'Loading content...',
+                    'Rendering page...'
+                ];
+                this.currentStage = 0;
+            }
+
+            updateProgress(percent, stage = null) {
+                this.currentProgress = Math.min(percent, 100);
+                
+                if (this.progressBar) {
+                    this.progressBar.style.width = this.currentProgress + '%';
+                }
+                
+                if (this.progressText) {
+                    this.progressText.textContent = Math.round(this.currentProgress) + '%';
+                }
+                
+                if (stage !== null && this.loadingStage) {
+                    this.currentStage = stage;
+                    this.loadingStage.textContent = this.loadingStages[stage] || 'Loading...';
+                }
+            }
+
+            nextStage() {
+                if (this.currentStage < this.loadingStages.length - 1) {
+                    this.updateProgress(this.currentProgress, this.currentStage + 1);
+                }
+            }
+
+            showError(message) {
+                this.hideLoading();
+                if (this.errorText) {
+                    this.errorText.textContent = message;
+                }
+                if (this.errorMessage) {
+                    this.errorMessage.style.display = 'block';
+                }
+            }
+
+            hideLoading() {
+                if (this.loadingOverlay) {
+                    this.loadingOverlay.classList.add('hidden');
+                }
+            }
+
+            async simulateProgressiveLoading() {
+                this.updateProgress(10, 0);
+                await this.delay(300);
+                this.updateProgress(25, 1);
+                await this.delay(400);
+                this.updateProgress(45, 2);
+                await this.delay(500);
+                this.updateProgress(70, 3);
+            }
+
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
-            const loader = document.getElementById('loader');
-            const errorMessage = document.getElementById('error-message');
-            const errorText = document.getElementById('error-text');
-            const frame = document.getElementById('uv-frame');
+            const loader = new ProgressiveLoader();
             
             try {
                 const url = sessionStorage.getItem('uvUrl');
@@ -456,38 +479,164 @@
                 if (!url) {
                     throw new Error('No URL provided. Please go back and try again.');
                 }
-
+                await loader.simulateProgressiveLoading();
                 const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
-                let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";                
+                let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
                 if (await connection.getTransport() !== "/epoxy/index.mjs") {
                     await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
                 }
+                loader.updateProgress(80, 4);
+                const encodedUrl = __uv$config.prefix + __uv$config.encodeUrl(url);
                 
-                frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
-                
-                frame.onload = () => {
-                    loader.style.display = 'none';
-                    frame.style.display = 'block';
-                };
-                
-                frame.onerror = () => {
-                    loader.style.display = 'none';
-                    errorText.textContent = 'Failed to load the requested page.';
-                    errorMessage.style.display = 'block';
-                };
-                
-                setTimeout(() => {
-                    if (frame.style.display === 'none') {
-                        loader.style.display = 'none';
-                        frame.style.display = 'block';
-                    }
-                }, 20000);
+                // Replace the existing iframe loading logic with this modified version:
+
+                const iframeLoadPromise = new Promise((resolve, reject) => {
+                    const timeout = setTimeout(() => {
+                        reject(new Error('Request timed out. The page took too long to load.'));
+                    }, 30000);
+
+                    let contentShown = false; // Track if we've already shown the content
+
+                    const progressInterval = setInterval(() => {
+                        if (loader.currentProgress < 95) {
+                            loader.updateProgress(loader.currentProgress + 1);
+                        }
+                        
+                        // Show content when we reach 95% or above
+                        if (loader.currentProgress >= 95 && !contentShown) {
+                            contentShown = true;
+                            loader.frame.style.display = 'block';
+                            loader.frame.classList.add('loaded');
+                            
+                            // Hide loading overlay after a brief delay
+                            setTimeout(() => {
+                                loader.hideLoading();
+                            }, 500);
+                        }
+                    }, 100);
+
+                    loader.frame.onload = () => {
+                        clearTimeout(timeout);
+                        clearInterval(progressInterval);
+                        
+                        // Ensure we reach 100% and show content if not already shown
+                        loader.updateProgress(100);
+                        
+                        if (!contentShown) {
+                            contentShown = true;
+                            loader.frame.style.display = 'block';
+                            loader.frame.classList.add('loaded');
+                            
+                            setTimeout(() => {
+                                loader.hideLoading();
+                            }, 200);
+                        }
+                        
+                        resolve();
+                    };
+                    
+                    loader.frame.onerror = () => {
+                        clearTimeout(timeout);
+                        clearInterval(progressInterval);
+                        reject(new Error('Failed to load the requested page.'));
+                    };
+
+                    // Handle iframe content loading events (rest of the code remains the same)
+                    loader.frame.addEventListener('load', () => {
+                        try {
+                            const iframeDoc = loader.frame.contentDocument || loader.frame.contentWindow?.document;
+                            if (iframeDoc) {
+                                const style = iframeDoc.createElement('style');
+                                style.textContent = `
+                                    body { 
+                                        opacity: 0 !important; 
+                                        transition: opacity 0.5s ease !important; 
+                                    }
+                                    body.iframe-loaded { 
+                                        opacity: 1 !important; 
+                                    }
+                                    img { 
+                                        opacity: 0 !important;
+                                        transition: opacity 0.3s ease !important; 
+                                    }
+                                    img.loaded { 
+                                        opacity: 1 !important; 
+                                    }
+                                `;
+                                iframeDoc.head.appendChild(style);
+
+                                const images = iframeDoc.querySelectorAll('img');
+                                let loadedImages = 0;
+                                
+                                images.forEach((img, index) => {
+                                    if (img.complete) {
+                                        img.classList.add('loaded');
+                                        loadedImages++;
+                                    } else {
+                                        img.addEventListener('load', () => {
+                                            img.classList.add('loaded');
+                                            loadedImages++;
+                                            
+                                            const imageProgress = (loadedImages / images.length) * 5;
+                                            loader.updateProgress(Math.min(95 + imageProgress, 100));
+                                        });
+                                    }
+                                });
+
+                                setTimeout(() => {
+                                    iframeDoc.body.classList.add('iframe-loaded');
+                                }, 100);
+                            }
+                        } catch (e) {
+                            console.log('Cross-origin iframe - progressive loading will work at top level');
+                        }
+                    });
+                });
+                loader.frame.src = encodedUrl;
+                await iframeLoadPromise;
                 
             } catch (error) {
-                console.error('Error:', error);
-                loader.style.display = 'none';
-                errorText.textContent = error.message || 'An unexpected error occurred.';
-                errorMessage.style.display = 'block';
+                console.error('Loading error:', error);
+                loader.showError(error.message || 'An unexpected error occurred.');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const refreshBtn = document.getElementById('refresh');
+            const backBtn = document.getElementById('back');
+            const forwardBtn = document.getElementById('forward');
+            const frame = document.getElementById('uv-frame');
+
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', () => {
+                    if (frame && frame.contentWindow) {
+                        const loadingOverlay = document.getElementById('loading-overlay');
+                        if (loadingOverlay) {
+                            loadingOverlay.classList.remove('hidden');
+                            setTimeout(() => {
+                                loadingOverlay.classList.add('hidden');
+                            }, 1000);
+                        }
+                        
+                        frame.contentWindow.location.reload();
+                    }
+                });
+            }
+
+            if (backBtn) {
+                backBtn.addEventListener('click', () => {
+                    if (frame && frame.contentWindow) {
+                        frame.contentWindow.history.back();
+                    }
+                });
+            }
+
+            if (forwardBtn) {
+                forwardBtn.addEventListener('click', () => {
+                    if (frame && frame.contentWindow) {
+                        frame.contentWindow.history.forward();
+                    }
+                });
             }
         });
     </script>
