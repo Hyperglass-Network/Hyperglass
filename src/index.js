@@ -12,7 +12,7 @@ import fastifyRateLimit from "@fastify/rate-limit";
 
 // Static paths
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const publicPath = join(__dirname, '../public');
+const publicPath = join(__dirname, '../');
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
