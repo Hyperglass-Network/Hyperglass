@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta name="description" content="Hyperglass is a fast and easy to use web proxy that will let you bypass most (if not all) restrictions" />
+    <meta name="keywords" content="proxy, web proxy, ultraviolet, service workers, unblock websites, unblock chromebook, free web proxy, proxy list, proxy sites, un block chromebook, online proxy, proxy server, proxysite, proxy youtube, bypass securly, bypass iboss, bypass lightspeed filter, holy unblocker, chromebooks, titanium network, unblock youtube, youtube proxy, unblocked youtube, youtube unblocked, hyperglass, proxy" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <title>HyperGlass</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet" />
+    <link rel="preload" href="css/index.css" as="style">
+    <link rel="preload" href="css/navbars.css" as="style">
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/navbars.css" />
+    <script src="baremux/index.js" defer></script>
+    <script src="epoxy/index.js" defer></script>
+    <script src="uv/uv.bundle.js" defer></script>
+    <script src="uv/uv.config.js" defer></script>
+    <script src="js/register-sw.js" defer></script>
+    <script src="js/search.js" defer></script>
+    <script src="js/index.js" defer></script>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="flex-center">
+        <h3 class="galaxy-text">Hyperglass</h3>
+        <form id="uv-form">
+            <input id="uv-search-engine" type="hidden" value="https://www.google.com/search?q=%s" />
+            <input id="uv-address" type="text" placeholder="Search the web freely" />
+        </form>
+        <p class="bitcoin-font quotes">hii bestie!!!</p>
+    </div>
+
+    <div class="desc">
+        <p id="uv-error"></p>
+        <pre id="uv-error-code"></pre>
+    </div>
+
+    <script src="js/navbars.js"></script>
+
+    <script>
+        const inputasdf = document.getElementById('uv-address');
+        const formasdf = document.getElementById('uv-form');
+
+        function updateWidth() {
+            const len = inputasdf.value.length;
+            if (len >= 30) {
+                formasdf.style.width = '50%';
+            } else if (len >= 24) {
+                formasdf.style.width = '35%';
+            } else {
+                formasdf.style.width = '25%';
+            }
+        }
+
+        formasdf.style.width = '25%';
+        inputasdf.addEventListener('input', updateWidth);
+    </script>
+    <iframe style="display: none;" id="uv-frame" width="0%" height="0%" frameborder="0" hidden></iframe>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            if (sessionStorage.getItem("auto-submitted") === "true") return;
+
+            const input = document.getElementById("uv-address");
+            const form = document.getElementById("uv-form");
+
+            try {
+                await registerSW();
+            } catch (err) {
+                console.error("Service Worker registration failed", err);
+                return;
+            }
+            sessionStorage.setItem("auto-submitted", "true");
+
+            input.value = "customtest.tail4911e3.ts.net";
+            form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const alreadyLoaded = localStorage.getItem("firstLoadDone");
+            const redirectedBack = sessionStorage.getItem("bouncedBack");
+            if (!alreadyLoaded && !redirectedBack) {
+                localStorage.setItem("firstLoadDone", "true");
+                sessionStorage.setItem("bouncedBack", "true");
+                document.body.innerHTML = `<div style="height:100vh;display:flex;justify-content:center;align-items:center;font-family:sans-serif;"><h1>Preparing your first visit...</h1></div>`;
+                setTimeout(() => {
+                    window.location.href = "search.html";
+                }, 1000);
+            }
+        });
+    </script>
+
+
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const homeside = document.querySelector('.homeside');
+            if (homeside) {
+                homeside.classList.add('active');
+            }
+        });
+    </script> -->
+</body>
+</html>

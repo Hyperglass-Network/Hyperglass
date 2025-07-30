@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let processedUrl = url;
         if (!url.includes('.') && !url.startsWith('http')) {
-            const searchEngine = localStorage.getItem("searchEngine") || "google";
+            const searchEngine = sessionStorage.getItem("searchEngine") || "google";
             processedUrl = `https://${searchEngine}.com/search?q=${encodeURIComponent(url)}`;
         } else if (!/^https?:\/\//i.test(url)) {
             processedUrl = 'https://' + url;
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             let processedUrl = previousUrl;
             if (!previousUrl.includes('.') && !previousUrl.startsWith('http')) {
-                const searchEngine = localStorage.getItem("searchEngine") || "google";
+                const searchEngine = sessionStorage.getItem("searchEngine") || "google";
                 processedUrl = `https://${searchEngine}.com/search?q=${encodeURIComponent(previousUrl)}`;
             } else if (!/^https?:\/\//i.test(previousUrl)) {
                 processedUrl = 'https://' + previousUrl;
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             let processedUrl = nextUrl;
             if (!nextUrl.includes('.') && !nextUrl.startsWith('http')) {
-                const searchEngine = localStorage.getItem("searchEngine") || "google";
+                const searchEngine = sessionStorage.getItem("searchEngine") || "google";
                 processedUrl = `https://${searchEngine}.com/search?q=${encodeURIComponent(nextUrl)}`;
             } else if (!/^https?:\/\//i.test(nextUrl)) {
                 processedUrl = 'https://' + nextUrl;

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Page Not Found</title>
+    <script src="baremux/index.js" defer></script>
+    <script src="epoxy/index.js" defer></script>
+    <script src="uv/uv.bundle.js" defer></script>
+    <script src="uv/uv.config.js" defer></script>
+    <script src="js/register-sw.js" defer></script>
+    <script src="js/search.js" defer></script>
+    <script src="js/index.js" defer></script>
+    <script src="navbars.js"></script>
+  </head>
+  <body>
+    <script>
+      sessionStorage.redirect = location.href;
+      window.location.replace("/index.html");
+    </script>
+    <p>Redirecting...</p>
+  </body>
+
+</html>

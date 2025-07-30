@@ -88,6 +88,12 @@ main {
 #uv-error-code {
     text-align: center;
 }
+/* 
+.uv-frame {
+    top: 0;
+    right: 0;
+    width: 100%;
+} */
 
 .bitcoin-font {
     font-family: "Bitcount Prop Single", system-ui !important;

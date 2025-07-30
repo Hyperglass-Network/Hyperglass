@@ -1,4 +1,3 @@
-console.log("navbars.js is running");
 function initializeNavbar() {
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');

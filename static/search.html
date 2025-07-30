@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet" />
     <!-- <link rel="stylesheet" href="css/index.css"> -->
     <!-- <link rel="stylesheet" href="css/navbars.css"> -->
+    <link rel="preload" href="css/searchnav.css" as="style">
     <style>
         .loader {
             width: 50px;
@@ -174,6 +175,14 @@
     <!-- <link rel="stylesheet" href="css/searchnav.css"> -->
 </head>
 <body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (sessionStorage.getItem("bouncedBack") === "true") {
+                sessionStorage.removeItem("bouncedBack");
+                window.location.href = "index.html";
+            }
+        });
+    </script>
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <nav id="sidebar">
         <div class="sidebar-header">
@@ -303,9 +312,7 @@
             const errorMessage = document.getElementById('error-message');
             const errorText = document.getElementById('error-text');
             const frame = document.getElementById('uv-frame');
-            
             try {
-                // Debug: Check what URL we have
                 const url = sessionStorage.getItem('uvUrl');
                 console.log('Retrieved URL:', url);
                 console.log('Original query:', sessionStorage.getItem('uvOriginalQuery'));
@@ -313,37 +320,20 @@
                 if (!url) {
                     throw new Error('No URL found in session storage');
                 }
-                let cleanUrl = url;
-                if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
-                    cleanUrl = 'https://' + cleanUrl;
-                }
-                
-                console.log('Clean URL:', cleanUrl);
-                const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
+                // let cleanUrl = url;
+                // if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+                //     cleanUrl = 'https://' + cleanUrl;
+                // }
+                const errorCode = document.getElementById("uv-error-code");
+                const connection = new BareMux.BareMuxConnection("/baremux/worker.js")  
+                // console.log('Clean URL:', cleanUrl);
+                let frame = document.getElementById("uv-frame");
+                frame.style.display = "block";
                 let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
-                await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
-                console.log('BareMux initialized');
-                await new Promise(resolve => setTimeout(resolve, 100));
-                const encodedUrl = __uv$config.encodeUrl(cleanUrl);
-                const finalUrl = __uv$config.prefix + encodedUrl;
-                
-                console.log('Encoded URL:', encodedUrl);
-                console.log('Final iframe URL:', finalUrl);
-                
-                frame.src = finalUrl;
-                
-                const loadPromise = new Promise((resolve, reject) => {
-                    frame.onload = resolve;
-                    frame.onerror = reject;
-                    setTimeout(() => reject(new Error('Timeout')), 15000);
-                });
-                
-                try {
-                    await loadPromise;
-                    console.log('Frame loaded successfully');
-                } catch (loadError) {
-                    console.log('Load error or timeout, showing frame anyway:', loadError);
+                if (await connection.getTransport() !== "/epoxy/index.mjs") {
+                    await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
                 }
+                frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
                 
                 loader.style.display = 'none';
                 frame.style.display = 'block';

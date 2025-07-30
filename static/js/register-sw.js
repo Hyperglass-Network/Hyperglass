@@ -7,7 +7,7 @@ const stockSW = "/uv/sw.js";
 /**
  * List of hostnames that are allowed to run serviceworkers on http://
  */
-const swAllowedHostnames = ["localhost", "127.0.0.1"];
+const swAllowedHostnames = ["localhost", "127.0.0.1", "github.com"]; //test
 
 /**
  * Global util
