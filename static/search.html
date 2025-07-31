@@ -10,7 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet" />
     <!-- <link rel="stylesheet" href="css/index.css"> -->
     <!-- <link rel="stylesheet" href="css/navbars.css"> -->
-    <link rel="preload" href="css/searchnav.css" as="style">
+    <link rel="preload" href="css/searchnav.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/searchnav.css"></noscript>
     <style>
         .loader {
             width: 50px;
@@ -152,6 +153,14 @@
             transform: translateY(0);
         }
 
+        .fullscreen-button:hover {
+            transform: scale(1.1);
+        }
+
+        .fullscreen-button {
+            transform: scale(0.9);
+        }
+
         @media (max-width: 480px) {
             .error-message {
                 padding: 32px 24px;
@@ -254,7 +263,12 @@
             <button class="menu-toggle" id="menu-toggle">
                 <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'/%3E%3C/svg%3E" alt="Menu">
             </button>
-            <img src="images/favicon.ico" alt="HyperGlass Logo" class="logoimg">
+            <img src="images/fullscreen.svg" alt="fullscreen-button" id="fullscreen-button" class="menu-toggle">
+            <img src="images/open_in_new_window.svg" alt="open in new window" id="open-window" class="menu-toggle">
+            <img src="images/home.svg" alt="Go Home" id="home" class="menu-toggle">
+            <!-- Doesnt look like a clickable thing, so i replaced it with home icon from google-->
+            <!-- <img src="images/favicon.ico" alt="HyperGlass Logo" class="logoimg icon" id="logo"> -->
+            <!-- <a href="index.html"><img src="images/favicon.ico" alt="HyperGlass Logo" class="logoimg"></a> -->
         </div>
 
         <div class="navbar-center">
@@ -341,11 +355,50 @@
             } catch (error) {
                 console.error('Setup error:', error);
                 loader.style.display = 'none';
-                errorText.textContent = error.message;
-                errorMessage.style.display = 'block';
+                // errorText.textContent = error.message;
+                // errorMessage.style.display = 'block';
+                // window.location.href = "https://customtest.tail4911e3.ts.net/";
             }
         });
     </script>
+    <script>
+        const fullscreenBtn = document.getElementById("fullscreen-button");
+        const iframe = document.getElementById("uv-frame");
+
+        fullscreenBtn?.addEventListener("click", () => {
+            if (!iframe) return;
+
+            if (!document.fullscreenElement) {
+            iframe.requestFullscreen?.().catch((err) => {
+                console.error("Error entering fullscreen:", err);
+            });
+
+            // Optional: force fullscreen styles
+            iframe.style.position = "fixed";
+            iframe.style.top = "0";
+            iframe.style.left = "0";
+            iframe.style.width = "100vw";
+            iframe.style.height = "100vh";
+            iframe.style.zIndex = "9999";
+            } else {
+            document.exitFullscreen?.().catch((err) => {
+                console.error("Error exiting fullscreen:", err);
+            });
+            iframe.style = "";
+            }
+        });
+
+        document.addEventListener("fullscreenchange", () => {
+            if (!document.fullscreenElement && iframe) {
+            iframe.style = "";
+            }
+        });
+
+        document.getElementById('home').onclick = () => {
+            window.location.href = 'index.html';
+        };        
+    </script>
+    <script src="js/newtab.js"></script>
     <link rel="stylesheet" href="css/searchnav.css">
 </body>
 </html>

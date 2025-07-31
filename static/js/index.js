@@ -18,8 +18,6 @@ const error = document.getElementById("uv-error");
 /**
  * @type {HTMLPreElement}
  */
-let autoSubmit = false;
-const isAuto = sessionStorage.getItem("auto-submitted") === "true";
 const errorCode = document.getElementById("uv-error-code");
 const connection = new BareMux.BareMuxConnection("/baremux/worker.js")
 
@@ -35,16 +33,24 @@ form.addEventListener("submit", async (event) => {
 	}
 
 	const url = search(address.value, searchEngine.value);
-
-	let frame = document.getElementById("uv-frame");
-	frame.style.display = "block";
-	let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
-	if (await connection.getTransport() !== "/epoxy/index.mjs") {
-		await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
-	}
-	frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
-
-	if (!isAuto) {
+	sessionStorage.setItem('uvUrl', url);
+	sessionStorage.setItem('uvOriginalQuery', address.value);
+	
+	const isAutoSubmit = sessionStorage.getItem("auto-submitted") === "true" && 
+	                     address.value === "customtest.tail4911e3.ts.net";
+	
+	if (isAutoSubmit) {
+		let frame = document.getElementById("uv-frame");
+		frame.style.display = "block";
+		let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
+		if (await connection.getTransport() !== "/epoxy/index.mjs") {
+			await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
+		}
+		frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
+		setTimeout(() => {
+			window.location.href = "search.html";
+		}, 1500);
+	} else {
 		window.location.href = "search.html";
 	}
 });

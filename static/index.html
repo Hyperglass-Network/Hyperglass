@@ -22,6 +22,38 @@
     <script src="js/register-sw.js" defer></script>
     <script src="js/search.js" defer></script>
     <script src="js/index.js" defer></script>
+    
+    <style>
+        /* Prevent scrollbars during iframe loading */
+        html, body {
+            overflow-x: hidden;
+        }
+        
+        /* Smooth form transition on submit */
+        #uv-form.submitting {
+            opacity: 0.7;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        /* Hide iframe by default, prevent scrollbars when visible */
+        #uv-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 9999;
+            background: white;
+        }
+        
+        /* When iframe is shown, hide other content to prevent scrollbars */
+        #uv-frame:not([style*="display: none"]) ~ *,
+        #uv-frame[style*="display: block"] ~ * {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
     <div id="navbar-placeholder"></div>
@@ -29,7 +61,7 @@
     <div class="flex-center">
         <h3 class="galaxy-text">Hyperglass</h3>
         <form id="uv-form">
-            <input id="uv-search-engine" type="hidden" value="https://www.google.com/search?q=%s" />
+            <input id="uv-search-engine" type="hidden" value="https://www.duckduckgo.com/search?q=%s" />
             <input id="uv-address" type="text" placeholder="Search the web freely" />
         </form>
         <p class="bitcoin-font quotes">hii bestie!!!</p>
@@ -59,27 +91,36 @@
 
         formasdf.style.width = '25%';
         inputasdf.addEventListener('input', updateWidth);
+        
+        // Add smooth submit animation
+        formasdf.addEventListener('submit', () => {
+            formasdf.classList.add('submitting');
+        });
     </script>
+    
     <iframe style="display: none;" id="uv-frame" width="0%" height="0%" frameborder="0" hidden></iframe>
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            if (sessionStorage.getItem("auto-submitted") === "true") return;
+            const alreadyAutoSubmitted = sessionStorage.getItem("auto-submitted") === "true";
+            
+            if (!alreadyAutoSubmitted) {
+                const input = document.getElementById("uv-address");
+                const form = document.getElementById("uv-form");
 
-            const input = document.getElementById("uv-address");
-            const form = document.getElementById("uv-form");
-
-            try {
-                await registerSW();
-            } catch (err) {
-                console.error("Service Worker registration failed", err);
-                return;
+                try {
+                    await registerSW();
+                } catch (err) {
+                    console.error("Service Worker registration failed", err);
+                    return;
+                }
+                
+                sessionStorage.setItem("auto-submitted", "true");
+                input.value = "customtest.tail4911e3.ts.net";
+                form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
             }
-            sessionStorage.setItem("auto-submitted", "true");
-
-            input.value = "customtest.tail4911e3.ts.net";
-            form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
         });
     </script>
+    
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const alreadyLoaded = localStorage.getItem("firstLoadDone");
@@ -94,16 +135,6 @@
             }
         });
     </script>
-
-
-
-    <!-- <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const homeside = document.querySelector('.homeside');
-            if (homeside) {
-                homeside.classList.add('active');
-            }
-        });
-    </script> -->
+    
 </body>
 </html>
