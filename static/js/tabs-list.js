@@ -1,3 +1,4 @@
+// make this actually work later
 class TabManager {
     constructor() {
         this.tabs = [];
