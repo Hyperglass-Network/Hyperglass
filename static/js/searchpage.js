@@ -63,6 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (!/^https?:\/\//i.test(url)) {
             processedUrl = 'https://' + url;
         }
+        // Doesn't work for some reason??
+        // urlBar.value = toString(processedUrl);
 
         if (frame) {
             loader.style.display = 'block';
@@ -74,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 frame.onload = () => {
                     loader.style.display = 'none';
                     frame.style.display = 'block';
+                    urlBar.value = processedUrl;
                     
                     sessionStorage.setItem('uvUrl', processedUrl);
                     sessionStorage.setItem('uvOriginalQuery', url);

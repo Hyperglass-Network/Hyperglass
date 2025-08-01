@@ -87,15 +87,10 @@ function search_icons() {
         icon.addEventListener('click', function (e) {
             e.preventDefault();
             const dataUrl = icon.getAttribute('data-url');
-            
-            // Check if we're on the search page
             if (window.location.pathname.includes('search.html')) {
-                // Get the search bar and simulate typing + enter
                 const urlBar = document.querySelector('.searching');
                 if (urlBar) {
                     urlBar.value = dataUrl;
-                    
-                    // Trigger the same navigation that happens when you press Enter
                     const enterEvent = new KeyboardEvent('keydown', {
                         key: 'Enter',
                         keyCode: 13,
@@ -109,7 +104,6 @@ function search_icons() {
                     console.error("Search bar not found");
                 }
             } else {
-                // Fallback to page redirect for other pages
                 const url = search(dataUrl, dataUrl);
                 sessionStorage.setItem('uvUrl', url);
                 sessionStorage.setItem('uvOriginalQuery', dataUrl);

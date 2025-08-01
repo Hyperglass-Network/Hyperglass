@@ -178,7 +178,7 @@
             }
         }
     </style>
-    <script src="js/search.js"></script>
+    <!-- <script src="js/search.js"></script> -->
     <script src="js/searchpage.js"></script>
     <script src="js/searchnav.js"></script>
     <!-- <link rel="stylesheet" href="css/searchnav.css"> -->
@@ -190,6 +190,20 @@
                 sessionStorage.removeItem("bouncedBack");
                 window.location.href = "index.html";
             }
+            const icons = document.querySelectorAll('.icons');
+            icons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    const url = icon.getAttribute('data-url');
+                    if (url && urlBar) {
+                        const fullUrl = url.startsWith('http') ? url : 'https://' + url;
+                        urlBar.value = fullUrl;
+                        
+                        const event = new Event('keydown');
+                        event.key = 'Enter';
+                        urlBar.dispatchEvent(event);
+                    }
+                });
+            });
         });
     </script>
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
@@ -227,37 +241,83 @@
                     </a>
                 </li>
             </ul>   
-        <div class="sidebar-section">
-            <h3 class="section-title">Tabs</h3>
-            <ul class="sidebar-nav">
-                <li>
-                    <a href="#" class="sidebar-link">   
-                        <img src="images/hive.svg" alt="Geforce Now" class="sidebar-icon">
-                        <span>Geforce Now</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="sidebar-link">
-                        <img src="images/hive.svg" alt="Github" class="sidebar-icon">
-                        <span>Github</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="sidebar-link">
-                        <img src="images/hive.svg" alt="Fortnite" class="sidebar-icon">
-                        <span>Fortnite</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="sidebar-link">
-                        <img src="images/hive.svg" alt="Discord" class="sidebar-icon">
-                        <span>Discord</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <!-- <div class="sidebar-section">
+            <div class="tabs-header">
+                <h3 class="section-title">Tabs</h3>
+                <button id="add-tab-btn" class="add-tab-plus">+</button>
+            </div>
+            <ul class="sidebar-nav" id="tabs-list"></ul>
+        </div> -->
+        <!-- Move CSS to head when done -->
+        <!--
+        <style>
+            .tabs-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 12px;
+            }
 
+            .add-tab-plus {
+                background: rgba(255,255,255,0.1);
+                border: 1px solid rgba(255,255,255,0.3);
+                color: white;
+                width: 24px;
+                height: 24px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s ease;
+            }
+
+            .add-tab-plus:hover {
+                background: rgba(255,255,255,0.2);
+                transform: scale(1.1);
+            }
+
+            .tab-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 8px 12px;
+                margin: 4px 0;
+                background: rgba(255,255,255,0.1);
+                border-radius: 8px;
+                cursor: pointer;
+            }
+
+            .tab-item.active {
+                background: rgba(77, 150, 255, 0.3);
+            }
+
+            .tab-title {
+                flex: 1;
+                color: white;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                margin-right: 8px;
+            }
+
+            .tab-close {
+                background: none;
+                border: none;
+                color: #ccc;
+                cursor: pointer;
+                font-size: 16px;
+                padding: 2px;
+            }
+
+            .tab-close:hover {
+                color: #ff6b6b;
+            }
+        </style> -->
+    </nav>
+    <!-- <script src="js/tabs-list.js"></script> -->
     <nav id="navbar">
         <div class="navbar-left">
             <button class="menu-toggle" id="menu-toggle">
@@ -373,7 +433,6 @@
                 console.error("Error entering fullscreen:", err);
             });
 
-            // Optional: force fullscreen styles
             iframe.style.position = "fixed";
             iframe.style.top = "0";
             iframe.style.left = "0";
@@ -397,6 +456,9 @@
         document.getElementById('home').onclick = () => {
             window.location.href = 'index.html';
         };        
+        if (window.location.pathname.includes('search.html')) {
+            monitorIframeUrl();
+        }
     </script>
     <script src="js/newtab.js"></script>
     <link rel="stylesheet" href="css/searchnav.css">
