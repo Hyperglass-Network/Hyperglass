@@ -24,19 +24,16 @@
     <script src="js/index.js" defer></script>
     
     <style>
-        /* Prevent scrollbars during iframe loading */
         html, body {
             overflow-x: hidden;
         }
         
-        /* Smooth form transition on submit */
         #uv-form.submitting {
             opacity: 0.7;
             pointer-events: none;
             transition: opacity 0.2s ease;
         }
         
-        /* Hide iframe by default, prevent scrollbars when visible */
         #uv-frame {
             position: fixed;
             top: 0;
@@ -48,7 +45,6 @@
             background: white;
         }
         
-        /* When iframe is shown, hide other content to prevent scrollbars */
         #uv-frame:not([style*="display: none"]) ~ *,
         #uv-frame[style*="display: block"] ~ * {
             display: none !important;
@@ -92,7 +88,6 @@
         formasdf.style.width = '25%';
         inputasdf.addEventListener('input', updateWidth);
         
-        // Add smooth submit animation
         formasdf.addEventListener('submit', () => {
             formasdf.classList.add('submitting');
         });

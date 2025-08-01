@@ -1,0 +1,143 @@
+.apps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 20px;
+    padding: 25px 40px 40px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 25px 40px 15px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 450px;
+    padding: 14px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    font-size: 17px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-bar:focus {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    height: 140px;
+    width: 100%;
+}
+
+.app:hover {
+    transform: translateY(-10px) scale(1.05);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.app:active {
+    transform: translateY(-5px) scale(1.02);
+}
+
+.app img {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    display: block;
+    flex-shrink: 0;
+}
+
+.app:hover img {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.app span {
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    line-height: 1.2;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.app::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+    pointer-events: none;
+}
+
+.app:hover::before {
+    transform: translateX(100%);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.app {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+}

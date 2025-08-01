@@ -162,7 +162,7 @@ body {
     filter: var(--icon-hover);
 }
 
-/* Right Section */
+/* right section */
 .navbar-right {
     display: flex;
     align-items: center;
