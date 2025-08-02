@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         <!-- <title>${originalQuery || 'HyperGlass'}</title> -->
                         <title>Google</title>
-                        <link rel="icon" href="https://www.google.com/favicon.ico">
+                        <link rel="icon" href="https://google.com/favicon.ico">
                         <style>
                             body, html { 
                                 margin: 0; 

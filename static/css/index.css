@@ -108,6 +108,12 @@ main {
         "ELXP" 0 !important;
 }
 
+#quotes {
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+}
+
 @media (max-width: 768px) {
     .nav-items {
         display: none;
