@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet" />
     <link rel="preload" href="css/apps.css" as="style" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="css/apps.css"></noscript>
+    <link rel="stylesheet" href="css/navbars.css">
 </head>
 <body>
     <div id="navbar-placeholder"></div>
@@ -20,40 +21,44 @@
     </div>
     <div class="apps" id="appsContainer"></div>
     <script src="js/navbars.js"></script>
+    <script src="js/search.js"></script>
     <script>
         const apps = [
-            { icon: "icons/geforcenow.webp", name: "Geforce Now", title: "Cloud gaming platform - Stream PC games instantly without downloads" },
-            { icon: "icons/discord.png", name: "Discord", title: "Voice and text chat platform for communities and gaming" },
-            { icon: "icons/webtoon.png", name: "Webtoon", title: "Digital comics and webtoons platform with thousands of series" },
-            { icon: "icons/invidious.png", name: "Invidious", title: "Privacy-focused YouTube alternative with no ads or tracking" },
-            { icon: "icons/youtube.png", name: "YouTube", title: "Video sharing platform - Watch and upload videos" },
-            { icon: "icons/spotify.png", name: "Spotify", title: "Music streaming platform with millions of songs and podcasts" },
-            { icon: "icons/twitch.webp", name: "Twitch", title: "Live streaming platform for gaming, music, and creative content" },
-            { icon: "icons/github.png", name: "GitHub", title: "Code repository hosting and collaboration platform for developers" },
-            { icon: "icons/vscode.png", name: "VS Code", title: "Powerful code editor with extensions and integrated terminal" },
-            { icon: "icons/1v1lol.png", name: "1v1.LOL", title: "Fast-paced 1v1 building and shooting game" },
-            { icon: "icons/coolmathgames.png", name: "Cool Math Games", title: "Educational math games that make learning fun" },
-            { icon: "icons/crazygames.png", name: "Crazy Games", title: "Thousands of free online games across all genres" },
-            { icon: "icons/poki.ico", name: "Poki", title: "Free online games platform with instant play" },
-            { icon: "icons/cs1.6.png", name: "Counter Strike 1.6", title: "Classic Counter-Strike 1.6 online browser version" },
-            { icon: "icons/chess.webp", name: "Chess", title: "Play chess online with millions of players worldwide" },
-            { icon: "icons/netflix.webp", name: "Netflix", title: "Netflix streaming platform for movies and TV shows" },
-            { icon: "icons/sflix.jpeg", name: "Sflix", title: "Free movie and TV show streaming platform" },
-            { icon: "icons/9anime.jpeg", name: "9anime", title: "Anime streaming platform with extensive library" },
-            { icon: "icons/reddit.webp", name: "Reddit", title: "Social news aggregation and discussion platform" },
-            { icon: "icons/twitter.png", name: "Twitter", title: "Social media platform for real-time updates and news" },
-            { icon: "icons/pinterest.png", name: "Pinterest", title: "Visual discovery platform for ideas and inspiration" },
-            { icon: "icons/duolingo.png", name: "Duolingo", title: "Language learning app with gamified lessons" },
-            { icon: "icons/amazon.jpg", name: "Amazon", title: "Online shopping and e-commerce platform" },
-            { icon: "icons/vercel.png", name: "Vercel", title: "Cloud platform for web deployment and hosting" },
-            { icon: "icons/google.png", name: "Google", title: "Google search engine and web services" },
-            { icon: "icons/y8.png", name: "y8", title: "Local business directory and search platform" }
+            { icon: "icons/geforcenow.webp", name: "Geforce Now", title: "laggy website like 1/30th of the time", dataUrl: "play.geforcenow.com" },
+            { icon: "icons/discord.png", name: "Discord", title: "its discord...", dataUrl: "discord.com" },
+            { icon: "icons/webtoon.png", name: "Webtoon", title: "manga... but korean people made the format", dataUrl: "https://www.webtoons.com/en/" },
+            { icon: "icons/invidious.png", name: "Invidious", title: "yt + frontend + privacy = this", dataUrl: "yewtu.be" },
+            { icon: "icons/spotify.png", name: "Spotify", title: "music stuff what do u expect", dataUrl: "spotify.com" },
+            { icon: "icons/twitch.webp", name: "Twitch", title: "if u dont know what this is ur not using it", dataUrl: "twitch.tv" },
+            { icon: "icons/github.png", name: "GitHub", title: "most of u bums dont know what this is probably", dataUrl: "github.com" },
+            { icon: "icons/vscode.png", name: "VS Code", title: "w code editor", dataUrl: "vscode.dev" },
+            { icon: "icons/1v1lol.png", name: "1v1.LOL", title: "low res + rip off fortnite, xbox cloud is better", dataUrl: "1v1.lol" },
+            { icon: "icons/coolmathgames.png", name: "Cool Math Games", title: "some good games for skids", dataUrl: "coolmathgames.com" },
+            { icon: "icons/crazygames.png", name: "Crazy Games", title: "very crazy games indeed", dataUrl: "crazygames.com" },
+            { icon: "icons/youtube.png", name: "YouTube", title: "wtf do u think it is", dataUrl: "youtube.com" },
+            { icon: "icons/poki.ico", name: "Poki", title: "contains dress to imporess alt for hurvja!!", dataUrl: "poki.com" },
+            { icon: "icons/cs1.6.png", name: "Counter Strike 1.6", title: "cs 1.6 for browser very good alt to real cs", dataUrl: "play-cs.com" },
+            { icon: "icons/chess.webp", name: "Chess", title: "chess is fire", dataUrl: "chess.com" },
+            { icon: "icons/netflix.webp", name: "Netflix", title: "idek who needs a description for this", dataUrl: "netflix.com" },
+            { icon: "icons/sflix.jpeg", name: "Sflix", title: "random link that i stole from doge or smth", dataUrl: "https://sflix.to/" },
+            { icon: "icons/9anime.jpeg", name: "9anime", title: "place to watch hentai /j but rip-off anime for skids", dataUrl: "9animetv.to" },
+            { icon: "icons/reddit.webp", name: "Reddit", title: "its reddit... probably ip-banned though", dataUrl: "reddit.com" },
+            { icon: "icons/twitter.png", name: "Twitter", title: "ugh call it twitter not x", dataUrl: "x.com" },
+            { icon: "icons/pinterest.png", name: "Pinterest", title: "its popular for some reason... i've never used it", dataUrl: "pinterest.com" },
+            { icon: "icons/duolingo.png", name: "Duolingo", title: "do ur daily 15 minutes guys", dataUrl: "duolingo.com" },
+            { icon: "icons/amazon.jpg", name: "Amazon", title: "jeff", dataUrl: "amazon.com" },
+            { icon: "icons/vercel.png", name: "Vercel", title: "stupid thing is blocked", dataUrl: "vercel.app" },
+            { icon: "icons/google.png", name: "Google", title: "if u actually need a description for this how tf did u get to this website", dataUrl: "google.com" },
+            { icon: "icons/y8.png", name: "y8", title: "yet another work related website", dataUrl: "y8.com"  }
         ];
         function createAppElement(app, index) {
             const appDiv = document.createElement('div');
             appDiv.className = 'app';
             appDiv.title = app.title;
+            appDiv.setAttribute('data-url', app.dataUrl);
             appDiv.style.animationDelay = `${index * 0.1}s`;
+            
+            console.log(`Creating app: ${app.name} with data-url: ${app.dataUrl}`);
             
             appDiv.innerHTML = `
                 <img src="${app.icon}" alt="${app.name}" loading="lazy">
@@ -92,6 +97,35 @@
                         app.style.display = 'none';
                     }
                 });
+            });
+            document.addEventListener('click', function(e) {
+                console.log('Click detected on:', e.target);
+                
+                const appElement = e.target.closest('.app');
+                console.log('Closest .app element:', appElement);
+                
+                if (appElement) {
+                    const dataUrl = appElement.getAttribute('data-url');
+                    console.log('Data URL found:', dataUrl);
+                    
+                    if (dataUrl) {
+                        console.log('About to call search function with:', dataUrl);
+                        if (typeof search === 'function') {
+                            const url = search(dataUrl, dataUrl);
+                            console.log('Search function returned:', url);
+                            sessionStorage.setItem('uvUrl', url);
+                            sessionStorage.setItem('uvOriginalQuery', dataUrl);
+                            window.location.href = 'search.html';
+                            console.log("redirecting to search page");
+                        } else {
+                            console.error('search function is not defined');
+                        }
+                    } else {
+                        console.log('No data-url attribute found');
+                    }
+                } else {
+                    console.log('Click was not on an app element');
+                }
             });
         });
     </script>

@@ -86,6 +86,7 @@ async function initNavbar() {
     });
 
     initializeIconSearch();
+    search_icons();
 }
 
 function initializeNavbar() {
@@ -93,8 +94,9 @@ function initializeNavbar() {
 }
 
 function search_icons() {
-    const icons = document.getElementsByClassName('icons');
-    Array.from(icons).forEach(icon => {
+    // fixed bc it wasnt jsut dom content loaded that i had to wait for it was the loadNavbar thing. 
+    const icons = document.querySelectorAll('.icons, .a-icons');
+    icons.forEach(icon => {
         icon.addEventListener('click', function () {
             const dataUrl = icon.getAttribute('data-url');
             if (dataUrl) {
@@ -102,7 +104,7 @@ function search_icons() {
                 sessionStorage.setItem('uvUrl', url);
                 sessionStorage.setItem('uvOriginalQuery', dataUrl);
                 window.location.href = 'search.html';
-                console.log("redirecting to search page");
+                console.log("redirecting to search page"); 
             }
         });
     });
@@ -114,6 +116,6 @@ if (document.readyState === 'loading') {
     loadNavbar();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    search_icons();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//     search_icons();
+// });

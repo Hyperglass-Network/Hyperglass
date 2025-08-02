@@ -22,9 +22,9 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-html {
+/* html {
     font-size: 125%;
-}
+} */
 
 main {
     padding: 1rem;
@@ -124,5 +124,9 @@ main {
     #sidebar {
         width: 100%;
         left: -100%;
+    }
+
+    #uv-form {
+        width: 100%;
     }
 }

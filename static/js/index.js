@@ -36,7 +36,7 @@ form.addEventListener("submit", async (event) => {
 	sessionStorage.setItem('uvUrl', url);
 	sessionStorage.setItem('uvOriginalQuery', address.value);
 	
-	const isAutoSubmit = sessionStorage.getItem("auto-submitted") === "true" && 
+	const isAutoSubmit = localStorage.getItem("auto-submitted") === "true" && 
 	                     address.value === "customtest.tail4911e3.ts.net";
 	
 	if (isAutoSubmit) {

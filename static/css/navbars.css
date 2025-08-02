@@ -351,6 +351,10 @@ body {
     display: inline-block;
 }
 
+html {
+    font-size: 125%;
+}
+
 .bitcoin-font {
     font-family: "Bitcount Prop Single", system-ui !important;
     font-optical-sizing: auto !important;

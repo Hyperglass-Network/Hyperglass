@@ -96,7 +96,7 @@
     <iframe style="display: none;" id="uv-frame" width="0%" height="0%" frameborder="0" hidden></iframe>
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            const alreadyAutoSubmitted = sessionStorage.getItem("auto-submitted") === "true";
+            const alreadyAutoSubmitted = localStorage.getItem("auto-submitted") === "true";
             
             if (!alreadyAutoSubmitted) {
                 const input = document.getElementById("uv-address");
@@ -109,7 +109,7 @@
                     return;
                 }
                 
-                sessionStorage.setItem("auto-submitted", "true");
+                localStorage.setItem("auto-submitted", "true");
                 input.value = "customtest.tail4911e3.ts.net";
                 form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
             }
@@ -119,10 +119,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const alreadyLoaded = localStorage.getItem("firstLoadDone");
-            const redirectedBack = sessionStorage.getItem("bouncedBack");
+            const redirectedBack = localStorage.getItem("bouncedBack");
             if (!alreadyLoaded && !redirectedBack) {
                 localStorage.setItem("firstLoadDone", "true");
-                sessionStorage.setItem("bouncedBack", "true");
+                localStorage.setItem("bouncedBack", "true");
                 document.body.innerHTML = `<div style="height:100vh;display:flex;justify-content:center;align-items:center;font-family:sans-serif;"><h1>Preparing your first visit...</h1></div>`;
                 setTimeout(() => {
                     window.location.href = "search.html";

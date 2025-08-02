@@ -186,8 +186,8 @@
 <body>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            if (sessionStorage.getItem("bouncedBack") === "true") {
-                sessionStorage.removeItem("bouncedBack");
+            if (localStorage.getItem("bouncedBack") === "true") {
+                localStorage.removeItem("bouncedBack");
                 window.location.href = "index.html";
             }
             const icons = document.querySelectorAll('.icons');
