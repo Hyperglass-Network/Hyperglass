@@ -64,9 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     newTab.document.open();
                     newTab.document.write(htmlContent);
                     newTab.document.close();
-                    setTimeout(() => {
-                        window.location.href = 'https://www.google.com';
-                    }, 200);
+                    // setTimeout(() => {
+                    //     window.location.href = 'https://www.google.com';
+                    // }, 200);
                 } else {
                     alert('The Pop-up has been blocked! Please allow pop-ups for this site.');
                 }

@@ -23,8 +23,11 @@ body {
 }
 
 #navbar {
-    position: sticky;
+    position: sticky; /* position: fixed;*/ /* problem with fixed is that i built it using sticky so things look off when i used fixed*/
     top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
     height: 64px;
     background-color: var(--base-clr);
     border-bottom: 1px solid var(--line-clr);
@@ -354,6 +357,13 @@ body {
 html {
     font-size: 125%;
 }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
 
 .bitcoin-font {
     font-family: "Bitcount Prop Single", system-ui !important;
