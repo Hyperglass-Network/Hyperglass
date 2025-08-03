@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 /* .main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -7,12 +11,21 @@
     padding: 40px 20px;
     justify-content: center;
 } */
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .main {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 24px;
-    max-width: 1800px;
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
     box-sizing: border-box;
@@ -24,7 +37,10 @@
     border: 1px solid #2e2f3b;
     backdrop-filter: blur(10px);
     border-radius: 16px;
-    width: 400px;
+    /* width: 400px; */
+    width: 100%;
+    max-width: 400px;
+    min-width: 200px;
     height: auto;
     padding: 40px 32px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -139,7 +155,6 @@
     width: 100%;
 }
 
-/* Input + button style for cards */
 .styled-input {
     background-color: #1c1d27;
     color: #fff;

@@ -61,7 +61,7 @@
         </div> -->
         <div class="card">
             <h2>About:Blank Cloaking</h2>
-            <p>Opens HyperGlass in an about:blank and doesn't leave history. Useful if teachers check your history or to hide the proxy from the blocking apps installed by schools</p>
+            <p>Opens HyperGlass in an about:blank and doesn't leave history. Preferably don't turn on unless needed.</p> <!-- Useful if teachers check your history or to hide the proxy from the blocking apps installed by schools -->
             <!-- From Uiverse.io by Galahhad --> 
             <label class="switch">
                 <input id="abcloak-toggle" type="checkbox">
@@ -89,16 +89,26 @@
             <button class="styled-button" onclick="removeBackground()">Remove Background</button>
         </div>
         <div class="card">
+            <h2>Quick Apps</h2>
+            <p>Change the small icons in the navbar to link elsewhere, faster to use than apps page. Max is 2</p>
+        </div>
+        <div class="card">
+            <h2>Sidebar Apps</h2>
+            <p>Extension to Quick Apps and based on your preferences. Max is 4</p>
+        </div>
+        <div class="card">
             <h2>Search Engine</h2>
             <p>Choose your search engine, duckduckgo is the default</p>
             <select id="search-engine" class="styled-input">
-                <option value="duckduckgo">DuckDuckGo</option>
-                <option value="google">Google</option>
-                <option value="bing">Bing</option>
+                <option value="https://duckduckgo.com">DuckDuckGo</option>
+                <option value="https://google.com">Google</option>
+                <option value="https://bing.com">Bing</option>
+                <option value="https://search.brave.com">Brave</option>
             </select>
             <button class="styled-button" onclick="localStorage.setItem('engine', document.getElementById('search-engine').value)">Save</button>
             <button class="styled-button" onclick="localStorage.removeItem('engine')">Reset</button>
         </div>
+        <script async="async" data-cfasync="false" src="//pl27328109.profitableratecpm.com/dd468aad13d68779b2cd473a60cac85d/invoke.js"></script>
         <div class="card">
             <h2>Proxy</h2>
             <p>Right now we only support ultraviolet, but scramjet is getting implemented</p>
@@ -120,10 +130,11 @@
             <input type="text" id="custom-wisp" class="styled-input" placeholder="Custom wisp URL">
             <button class="styled-button" onclick="let val = document.getElementById('wisp-select').value === 'custom' ? document.getElementById('custom-wisp').value : document.getElementById('wisp-select').value; localStorage.setItem('wisp', val);">Save</button>
         </div>
-        <div class="card">
+        <div id="container-dd468aad13d68779b2cd473a60cac85d"></div>
+        <!-- <div class="card">
             <h2>Advertisement xd</h2>
             <p>Some ads here probably, but more up</p>
-        </div>
+        </div> -->
     </div>
 
     <div class="modal-overlay" id="panicModal">

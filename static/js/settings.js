@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const closePToggle = document.getElementById('close-p-toggle');
     const savedCloseP = localStorage.getItem('close-p');
-    closePToggle.checked = savedCloseP === null ? true : savedCloseP === 'true';
+    closePToggle.checked = savedCloseP === null ? true : savedCloseP === 'false';
     closePToggle.addEventListener('change', function() {
         localStorage.setItem('close-p', this.checked);
         setTimeout(() => {
@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     abcloakToggle.checked = savedAbcloak === null ? true : savedAbcloak === 'true';
     abcloakToggle.addEventListener('change', function() {
         localStorage.setItem('abcloak', this.checked);
+        applyAboutBlankCloakingSetting();
     });
 
     const savedBg = localStorage.getItem('bg');

@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     applyTabCloakingSetting();
     applyClosingPreventionSetting();
     applyAboutBlankCloakingSetting();
+    applySearchEngine();
     // applyPanicKeySetting();
 });
 
@@ -52,13 +53,35 @@ function applyAboutBlankCloakingSetting() {
         newTab.document.write(`
             <!DOCTYPE html>
             <html lang="en">
-            <head><title>Iframe Wrapper</title></head>
+            <head></head>
             <body style="margin:0; padding:0; height:100vh; overflow:hidden; background:#000;">
                 <iframe src="${window.location.href}" style="border:none; width:100vw; height:100vh;"></iframe>
             </body>
             </html>
         `);
         newTab.document.close();
+        window.location.href = "https://google.com";
         // console.log('About:blank cloaking is enabled');
+    }
+}
+
+function applySearchEngine() {
+    const isHomePage = (() => {
+    const path = window.location.pathname;
+    const hash = window.location.hash;
+    const file = path.split('/').pop();
+    return (
+        path === '/' ||
+        file === 'index.html' ||
+        (path === '/' && hash.length > 0)
+    );
+    })();
+    if (isHomePage) {
+        let searchEngine = localStorage.getItem('engine') || "https://duckduckgo.com";
+        const searchEngineInput = document.getElementById("uv-search-engine");
+
+        if (searchEngineInput) {
+            searchEngineInput.value = `${searchEngine}/search?q=%s`;
+        }
     }
 }
