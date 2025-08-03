@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     applyClosingPreventionSetting();
     applyAboutBlankCloakingSetting();
     applySearchEngine();
+    applyQuickApps();
+    applySidebarApps();
     // applyPanicKeySetting();
 });
 
@@ -84,4 +86,18 @@ function applySearchEngine() {
             searchEngineInput.value = `${searchEngine}/search?q=%s`;
         }
     }
+}
+
+function applyQuickApps() {
+    const quickApps = JSON.parse(localStorage.getItem('quickApps') || '{}');
+    Object.keys(quickApps).forEach(slotIndex => {
+        updateNavbarIcon(slotIndex, quickApps[slotIndex]);
+    });
+}
+
+function applySidebarApps() {
+    const sidebarApps = JSON.parse(localStorage.getItem('sidebarApps') || '{}');
+    Object.keys(sidebarApps).forEach(slotIndex => {
+        updateSidebarApp(slotIndex, sidebarApps[slotIndex]);
+    });
 }

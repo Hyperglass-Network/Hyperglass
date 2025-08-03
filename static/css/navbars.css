@@ -72,7 +72,7 @@ body {
 .menu-toggle img {
     width: 24px;
     height: 24px;
-    filter: brightness(0) invert(1);
+    /* filter: brightness(0) invert(1); */
 }
 
 .navbar-right {
@@ -115,7 +115,7 @@ body {
 .nav-icon {
     width: 32px;
     height: 32px;
-    filter: brightness(0) invert(1);
+    /* filter: brightness(0) invert(1); */
 }
 
 .nav-link.active .nav-icon {
@@ -270,9 +270,9 @@ body {
 }
 
 .sidebar-icon {
-    width: 20px;
-    height: 20px;
-    filter: brightness(0) invert(1);
+    width: 40px;
+    height: 40px;
+    /* filter: brightness(0) invert(1); */
 }
 
 .sidebar-link.active .sidebar-icon {
