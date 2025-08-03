@@ -22,6 +22,7 @@
     <script src="js/register-sw.js" defer></script>
     <script src="js/search.js" defer></script>
     <script src="js/index.js" defer></script>
+    <script src="js/apply-settings.js"></script>
     
     <style>
         html, body {
@@ -57,15 +58,21 @@
     <script async="async" data-cfasync="false" src="https://pl27328109.profitableratecpm.com/dd468aad13d68779b2cd473a60cac85d/invoke.js"></script> -->
     <div id="navbar-placeholder"></div>
     <script type="text/javascript">
-        atOptions = {
-            'key' : '780d3d36684ceda44e90fe11082864d3',
-            'format' : 'iframe',
-            'height' : 90,
-            'width' : 728,
+        if (typeof atAsyncOptions !== 'object') var atAsyncOptions = [];
+        atAsyncOptions.push({
+            'key': '780d3d36684ceda44e90fe11082864d3',
+            'format': 'js',
+            'async': true,
+            'container': 'atContainer-780d3d36684ceda44e90fe11082864d3',
             'params' : {}
-        };
+        });
+        var script = document.createElement('script');
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = 'http' + (location.protocol === 'https:' ? 's' : '') + '://www.highperformanceformat.com/780d3d36684ceda44e90fe11082864d3/invoke.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
     </script>
-    <script type="text/javascript" src="https://www.highperformanceformat.com/780d3d36684ceda44e90fe11082864d3/invoke.js"></script>
+    <div id="atContainer-780d3d36684ceda44e90fe11082864d3"></div>
 
     <div class="flex-center">
         <h3 class="galaxy-text">Hyperglass</h3>

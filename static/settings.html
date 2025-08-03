@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <meta name="description" content="Hyperglass is a fast and easy to use web proxy that will let you bypass most (if not all) restrictions" />
     <meta name="keywords" content="proxy, web proxy, ultraviolet, service workers, unblock websites, unblock chromebook, free web proxy, proxy list, proxy sites, un block chromebook, online proxy, proxy server, proxysite, proxy youtube, bypass securly, bypass iboss, bypass lightspeed filter, holy unblocker, chromebooks, titanium network, unblock youtube, youtube proxy, unblocked youtube, youtube unblocked, hyperglass, proxy" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <title>HyperGlass</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet" />
     <link rel="preload" href="css/navbars.css" as="style" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="css/navbars.css"></noscript>
     <link rel="preload" href="css/settings.css" as="style" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="css/settings.css"></noscript>
+    <script src="js/apply-settings.js"></script>
 </head>
 <body>
     <div id="navbar-placeholder"></div>
@@ -23,39 +24,183 @@
         <div class="card">
             <h2>Tab Cloaking</h2>
             <p>Change your tab title and icon to look like another site</p>
+            <div class="tab-options">
+                <button onclick="setTabCloak('Google', './icons/google.png')" class="tab-cloak option"><img src="./icons/google.png"></button>
+                <button onclick="setTabCloak('HyperGlass', '/images/favicon.ico')" class="tab-cloak option"><img src="./icons/noicon.svg"></button>
+                <button onclick="setTabCloak('Google Drive', './icons/drive.png')" class="tab-cloak option"><img src="./icons/drive.png"></button>
+                <button onclick="setTabCloak('Google Docs', './icons/docs.png')" class="tab-cloak option"><img src="./icons/docs.png"></button>
+                <button onclick="setTabCloak('Canvas', './icons/canvas.png')" class="tab-cloak option"><img src="./icons/canvas.png"></button>
+            </div>
         </div>
         <div class="card">
             <h2>Closing Prevention</h2>
-            <p>Opens a popup confirmation to close the tab. Useful for things like GoGuardian</p>
+            <p>Opens a confirmation if you want to close the tab. Useful for things like GoGuardian. Requires a reload</p>
+            <label class="switch">
+                <input id="close-p-toggle" type="checkbox">
+                <div class="slider">
+                    <div class="circle">
+                        <svg class="cross" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 365.696 365.696" y="0" x="0" height="6" width="6" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path data-original="#000000" fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25zm0 0"></path>
+                            </g>
+                        </svg>
+                        <svg class="checkmark" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0" x="0" height="10" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path class="" data-original="#000000" fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"></path>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </label>
         </div>
-        <div class="card">
+        <!-- Figure out later xd-->
+        <!-- <div class="card">
             <h2>Panic Key</h2>
             <p>Redirects to a page of your choosing when a key combo is pressed</p>
-        </div>
+            <button onclick="openModal('panicModal')" class="styled-button">Configure Panic Key</button>
+        </div> -->
         <div class="card">
             <h2>About:Blank Cloaking</h2>
-            <p>Opens hyperglass in an about:blank and doesn't leave history</p>
+            <p>Opens HyperGlass in an about:blank and doesn't leave history. Useful if teachers check your history or to hide the proxy from the blocking apps installed by schools</p>
+            <!-- From Uiverse.io by Galahhad --> 
+            <label class="switch">
+                <input id="abcloak-toggle" type="checkbox">
+                <div class="slider">
+                    <div class="circle">
+                        <svg class="cross" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 365.696 365.696" y="0" x="0" height="6" width="6" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path data-original="#000000" fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25zm0 0"></path>
+                            </g>
+                        </svg>
+                        <svg class="checkmark" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0" x="0" height="10" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path class="" data-original="#000000" fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"></path>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </label>
         </div>
         <div class="card">
             <h2>Background</h2>
             <p>Change the background to a custom image</p>
+            <input type="text" id="bg-url" class="styled-input" placeholder="Enter background URL">
+            <button class="styled-button" onclick="setBackground()">Set Background</button>
+            <button class="styled-button" onclick="removeBackground()">Remove Background</button>
         </div>
         <div class="card">
             <h2>Search Engine</h2>
-            <p>Choose your search engine, duckduckgo is the defalt</p>
+            <p>Choose your search engine, duckduckgo is the default</p>
+            <select id="search-engine" class="styled-input">
+                <option value="duckduckgo">DuckDuckGo</option>
+                <option value="google">Google</option>
+                <option value="bing">Bing</option>
+            </select>
+            <button class="styled-button" onclick="localStorage.setItem('engine', document.getElementById('search-engine').value)">Save</button>
+            <button class="styled-button" onclick="localStorage.removeItem('engine')">Reset</button>
         </div>
         <div class="card">
             <h2>Proxy</h2>
             <p>Right now we only support ultraviolet, but scramjet is getting implemented</p>
+            <select id="proxy-select" class="styled-input">
+                <option value="ultraviolet">Ultraviolet</option>
+                <option value="scramjet">Scramjet</option>
+            </select>
+            <button class="styled-button" onclick="localStorage.setItem('proxy', document.getElementById('proxy-select').value)">Save</button>
         </div>
         <div class="card">
             <h2>Wisp Server</h2>
             <p>Choose your wisp server or add your own</p>
+            <select id="wisp-select" class="styled-input">
+                <option value="wisp1">Wisp 1</option>
+                <option value="wisp2">Wisp 2</option>
+                <option value="wisp3">Wisp 3</option>
+                <option value="custom">Custom</option>
+            </select>
+            <input type="text" id="custom-wisp" class="styled-input" placeholder="Custom wisp URL">
+            <button class="styled-button" onclick="let val = document.getElementById('wisp-select').value === 'custom' ? document.getElementById('custom-wisp').value : document.getElementById('wisp-select').value; localStorage.setItem('wisp', val);">Save</button>
         </div>
-        <!-- <div class="card">
+        <div class="card">
             <h2>Advertisement xd</h2>
-            <p>Some ad here probably, but more up</p>
-        </div> -->
+            <p>Some ads here probably, but more up</p>
+        </div>
     </div>
+
+    <div class="modal-overlay" id="panicModal">
+        <div class="modal">
+            <h3>Set Panic Key URL</h3>
+            <input type="text" id="panic-url" class="styled-input" style="align-items: center; text-align: center; font-size: 24px;" placeholder="URL to redirect to, please include https://">
+            <input type="text" id="panic-key" class="styled-input" style="align-items: center; font-size: 28px; text-align: center;" placeholder="Press any key..." readonly>
+            <button class="styled-button panicb" style="height: 40px;" onclick="savePanicSettings()">Save</button>
+            <button class="styled-button panicb" style="height: 40px;" onclick="localStorage.removeItem('panicUrl'); localStorage.removeItem('panicKey'); closeModal('panicModal')">Remove</button>
+            <button class="styled-button panicb" style="height: 40px;" onclick="closeModal('panicModal')">Cancel</button>
+        </div>
+    </div>
+
+    <!-- <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+    </script> -->
+    <script>
+        function savePanicSettings() {
+            const key = document.getElementById('panic-key').value;
+            const url = document.getElementById('panic-url').value;
+            
+            if (key && url) {
+                localStorage.setItem('panicKey', key);
+                localStorage.setItem('panicUrl', url);
+                applyPanicKeySetting();
+            }
+            
+            closeModal('panicModal');
+        }
+
+        function setBackground() {
+            const bgUrl = document.getElementById('bg-url').value;
+            if (bgUrl && bgUrl.trim() !== '') {
+                localStorage.setItem('bg', bgUrl);
+                applyBackgroundSetting();
+            }
+        }
+
+        function removeBackground() {
+            localStorage.removeItem('bg');
+            document.body.style.backgroundImage = '';
+            document.body.style.backgroundSize = '';
+            document.body.style.backgroundPosition = '';
+            document.body.style.backgroundRepeat = '';
+            document.body.style.backgroundAttachment = '';
+            document.getElementById('bg-url').value = '';
+        }
+
+        function setTabCloak(title, faviconPath) {
+            document.title = title;
+            localStorage.setItem('title', title);
+            localStorage.setItem('favicon', faviconPath);
+            let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            link.href = faviconPath;
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+
+        // document.getElementById('panic-key').addEventListener('keydown', function(e) {
+        //     e.preventDefault();
+        //     let keyValue = e.key;
+        //     if (keyValue === ' ') keyValue = 'Space';
+        //     if (keyValue === 'Escape') keyValue = 'Escape';
+        //     this.value = keyValue;
+        // });
+
+        // document.getElementById('panic-key').addEventListener('focus', function() {
+        //     this.value = '';
+        //     this.placeholder = 'Press any key...';
+        // });
+    </script>
+    <script src="js/settings.js"></script>
 </body>
 </html>
