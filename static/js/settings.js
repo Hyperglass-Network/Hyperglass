@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const abcloakToggle = document.getElementById('abcloak-toggle');
     const savedAbcloak = localStorage.getItem('abcloak');
-    abcloakToggle.checked = savedAbcloak === null ? true : savedAbcloak === 'true';
+    abcloakToggle.checked = savedAbcloak === 'true';
     abcloakToggle.addEventListener('change', function() {
         localStorage.setItem('abcloak', this.checked);
         applyAboutBlankCloakingSetting();
